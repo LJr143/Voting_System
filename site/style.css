@@ -1,4 +1,40 @@
 
+	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		
+	}	
+	#ImageUsep{
+		width: 100%;
+		height: 100%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	.Title{
+		background-color: maroon;
+	}
+	.Title h1{
+		text-align: center;
+		padding-top: 20px;
+		padding-bottom: 10px;
+		color: white;
+		font-size: 40px;
+	}
+.ComElecLogo{
+	display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+  height: 250px;
+  top: 50px;
+  position: relative;
+}
+		
+
+	
+	
 		footer {
 			position: absolute;
 			bottom: 0;
@@ -6,9 +42,9 @@
 			right: 0;
 			background: #111;
 			height: auto;
-			width: 100vh;
+			width: vw;
 			font-family: "Open Sans";
-			padding-top: 40px;
+			padding-top: 20px;
 			color: #fff;
 		}
 		.footer-content{
@@ -17,6 +53,7 @@
 			justify-content: center;
 			flex-direction: column;
 			text-align: center;
+			
 		}
 		.footer-content h3{
 			font-size: 1.8rem;
@@ -49,13 +86,15 @@
 			font-size: 1.1rem;
 			transition: color .4s ease;
 		}
-		.social a:hover i{
+		.socials a:hover i{
 			color: blue;
 		}
 		.footer-bottom{
 			background-color: #111;
 			width: 100vw;
-			padding: 20px 0;
+			padding: 10px 0;
+			bottom: 100px;
+
 			text-align: center;
 		}
 		.footer-bottom p{
