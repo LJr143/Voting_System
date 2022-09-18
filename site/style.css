@@ -6,8 +6,8 @@
 		
 	}	
 	#ImageUsep{
-		width: 100%;
-		height: 100%;
+		max-width: 100%;
+		max-height: 100%;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -26,8 +26,8 @@
 	display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 250px;
-  height: 250px;
+ max-width: 250px;
+  max-height: 250px;
   top: 50px;
   position: relative;
 }
@@ -91,7 +91,7 @@
 		}
 		.footer-bottom{
 			background-color: #111;
-			width: 100vw;
+			max-width: 100vw;
 			padding: 10px 0;
 			bottom: 100px;
 
