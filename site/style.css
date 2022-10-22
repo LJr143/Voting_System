@@ -113,7 +113,7 @@
 		.Login{
 			height: 100%;
 			width: 100%;
-			background-image: url(/image/Usep.jpg);
+			background-image: url(image/Usep.jpg);
 			background-image: linear-gradient(rgba(0,0,0,0.4,rgba(0,0,0,0.4)));
 			background-position: center;
 			background-size: cover;
