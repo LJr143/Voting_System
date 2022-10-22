@@ -7,9 +7,10 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <audio   controls autoplay >
-            <source src="audio.mp3" type="audio/mp3">
-        </audio>
+        <iframe src="audio.mp3" type="audio/mp3" allow="autoplay" id="audio" style="display:none"></iframe>
+<audio controls autoplay = "true" style="display: none">
+    <source src="audio.mp3" type="audio/mp3">
+</audio>
         <div class="Login">
             <div class="form-box">
                 <div class="button-box">
@@ -38,7 +39,14 @@
             </div>
             
 
-        </div>
+        </div><script>
+        var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  if (!isChrome){
+      $('#iframeAudio').remove()
+  }
+  else {
+      $('#playAudio').remove() // just to make sure that it will not have 2x audio in the background 
+  }</script>
     
         <script>
             var x= document.getElementById("Login");
