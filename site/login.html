@@ -7,12 +7,18 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <iframe src="audio.mp3" type="audio/mp3" allow="autoplay" id="audio" style="display:none"></iframe>
-<audio controls autoplay = "true" style="display: none">
-    <source src="audio.mp3" type="audio/mp3">
-</audio>
+       
+        
         <div class="Login">
+            <div>
+                <audio class = "audio-form" id="audio"  controls autoplay = "true" loop = "true" >
+                    <source src="audio.mp3" type="audio/mp3">
+                </audio>
+        
+    
+            </div>
             <div class="form-box">
+                
                 <div class="button-box">
                     <div id="buttons"></div>
                     <button type="button"  class="toggle-btn" onclick="login()">Log In</button>
@@ -23,6 +29,7 @@
                     <img src="image/google.png">
                     
                 </div>
+                
                 <form id="Login" class="input-group">
                     <input type="text" class="input-field" placeholder="Username" required>
                     <input type="text" class="input-field" placeholder="Password" required>
@@ -36,17 +43,9 @@
                     <input type="checkbox" class="check-box"><span>I agree to the terms & conditions</span>
                 <button type="submit" class="submit-button">Register</button>
                 </form>
-            </div>
+                
             
-
-        </div><script>
-        var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-  if (!isChrome){
-      $('#iframeAudio').remove()
-  }
-  else {
-      $('#playAudio').remove() // just to make sure that it will not have 2x audio in the background 
-  }</script>
+        </div>
     
         <script>
             var x= document.getElementById("Login");
