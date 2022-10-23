@@ -213,27 +213,11 @@
 		#Login{
 			left: 50px;
 		}
-		#Register{
+		#Signup{
 			left: 450px;
 		}
-		#audio{
-			width: 100px;
-			height: px;
-		}
-		.audio-form{
-			width: 100px;
-			height: 50px;
-			position:absolute;
-
-			margin: 20% 85%;
-			background-color: rgb(15, 207, 98);
-			padding: 0px;
-			overflow: hidden;
-			border-radius: 30px;
-
-			
-			
-		}
+		
+		
 
 
 
