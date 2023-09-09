@@ -2,6 +2,7 @@
 <!-- mabini campus -->
 <!-- student council -->
 <?php
+include '../config/db_config.php';
   $mabinistudents = array();
   $conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
   $query  = "select studID,nameCand,position,image,college, COUNT(*) from tb_votes where campus = 'Mabini' && indicator = 'Student Council' group by position,nameCand";
@@ -94,14 +95,14 @@
 
 <!-- logs -->
 <?php
-
-$conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-$tempCampus = $_SESSION['username'];
-$dt = date('Y-m-d G:i:s');
-$action = "Election Result | Access Granted";
-$query = "INSERT into tblogs(username,action,log_action_date)VALUES('$tempCampus','$action','$dt')";
-mysqli_query($conn, $query);
-
-$conn->close();
-
-?>
+//
+//$conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+//$tempCampus = $_SESSION['username'];
+//$dt = date('Y-m-d G:i:s');
+//$action = "Election Result | Access Granted";
+//$query = "INSERT into tb_admin_action_logs(username,action,log_action_date)VALUES('$tempCampus','$action','$dt')";
+//mysqli_query($conn, $query);
+//
+//$conn->close();
+//
+//?>

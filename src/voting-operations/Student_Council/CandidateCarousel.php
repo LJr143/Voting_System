@@ -1,5 +1,5 @@
 <?php
-/*Function For Checking IF There Is Atleat One Position In Database*/
+/*Function For Checking IF There Is Atleast One Position In Database*/
 function Make_Query_For_Position($connect,$campus){
   $output = '';
   $resultPosition = Make_Query_For_Student_Council_Position($connect,$campus);

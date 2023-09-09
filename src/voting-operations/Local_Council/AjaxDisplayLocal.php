@@ -2,6 +2,7 @@
    session_start();
    include '../../config/db_config.php';
    include '../Decryption.php';
+   error_reporting(0);
 
    $connect = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 
@@ -27,24 +28,24 @@
    function Make_Query_For_Local_Council($connect,$campus,$college,$program,$year,$position){
    if($campus == "Tagum"){
       if($position == "Senator" || $position == "Business Manager"){
-         //Senator (2 per program)
+         //Senator (3 per program)
          //dili kay kung siya lng isa
          $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
          $result = mysqli_query($connect, $query);
       }else{
          if($program == "BS in Agricultural and Biosystems Engineering" || $program == "Bachelor of Science in Agricultural Engineering"){
-         //Society of Agricultural and Biosystem Engineering Students (SABES)
-         $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND (program = "BS in Agricultural and Biosystems Engineering" OR program = "Bachelor of Science in Agricultural Engineering")  AND indicator = "local council" ORDER BY id ASC ';
+         //Society of Agricultural and Biosystems Engineering Students (SABES)
+         $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program = "'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
          $result = mysqli_query($connect, $query);
-         $lcname = "Society of Agricultural and Biosystem Engineering Students";
-         }elseif($program == "Bachelor of Elementary Education" || $program == "Bachelor of Special Needs Education" || $program == "Bachelor of Early Childhood Education"){
+         $lcname = "Society of Agricultural and Biosystems Engineering Students";
+         }elseif($program == "Bachelor of Elementary Education"){
          //Organization of Future Elementary Educators (OFEE)
-         $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND (program = "Bachelor of Elementary Education" OR program = "Bachelor of Special Needs Education" OR program = "Bachelor of Early Childhood Education")  AND indicator = "local council" ORDER BY id ASC ';
+         $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program = "'.$program.'" AND indicator = "local council" ORDER BY id ASC ';
          $result = mysqli_query($connect, $query);
          $lcname = "Organization of Future Elementary Educators";
-         }elseif($program == "BSEd"|| $program == "Bachelor of Technical-vocational Teacher Education"){
+         }elseif($program == "Bachelor of Secondary Education"){
          //Association of Future Secondary Teachers (AFSeT)
-         $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND (program = "BSEd" OR program = "Bachelor of Technical-vocational Teacher Education")  AND indicator = "local council" ORDER BY id ASC ';
+         $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program = "'.$program.'"  AND indicator = "Local Council" ORDER BY id ASC ';
          $result = mysqli_query($connect, $query);
          $lcname = "Association of Future Secondary Teachers";
          }elseif($program == "Bachelor of Science in Information Technology"){
@@ -52,6 +53,30 @@
          $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
          $result = mysqli_query($connect, $query);
          $lcname = "Society of Information and Technology Students";
+         }
+         elseif($program == "Bachelor of Early Childhood Education"){
+             //Bachelor of Early Childhood Education
+             $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
+             $result = mysqli_query($connect, $query);
+             $lcname = "Bachelor of Early Childhood Education";
+         }
+         elseif($program == "Bachelor of Special Needs Education"){
+             //Bachelor of Special Needs Education
+             $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
+             $result = mysqli_query($connect, $query);
+             $lcname = "Bachelor of Special Needs Education";
+         }
+         elseif($program == "Bachelor of Technical-Vocational Teacher Education"){
+             //Bachelor of Technical-Vocational Teacher Education
+             $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
+             $result = mysqli_query($connect, $query);
+             $lcname = "Bachelor of Technical-Vocational Teacher Education";
+         }
+         elseif($program == "School of Medicine"){
+             //School of Medicine
+             $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
+             $result = mysqli_query($connect, $query);
+             $lcname = "SINAG";
          }
       }
    }elseif($campus == "Mabini"){

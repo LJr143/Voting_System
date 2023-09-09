@@ -1,13 +1,13 @@
-<?php 
+<?php
   session_start();
   error_reporting(0);
   date_default_timezone_set('Asia/Manila');
   include '../config/db_config.php';
-    include '../includes/dashboard_add.php';
+  include '../includes/dashboard_add.php';
 
-  if(!isset($_SESSION['username'])){
-    header("location: ../index_admin.php");
-  }
+ if(!isset($_SESSION['username'])){
+   header("location: ../index_admin.php");
+ }
 
 ?>
 <!DOCTYPE html>
@@ -44,6 +44,7 @@
     <link rel="stylesheet" href="../css/card-counter.css">
     <link rel="stylesheet" href="../css/time.css">
       <link rel="stylesheet" href="../headerStyle.css">
+
     
   </head>
   <body id="page-top">
@@ -184,28 +185,28 @@
           </ol>
 
          <!-- Icon Cards-->
-        <?php $campuss = $_SESSION['campus']; ?>
+        <?php $campus = $_SESSION['campus']; ?>
          <div class="row">
         <div class="col-md-3 card-body">
           <div class="card-counter primary">
             <img width="25%" src="../img/campus_logos/tagum_logo.png" alt="">
-            <span class="count-numbers"><?php  ?></span>
+            <span class="count-numbers"><?php echo  $resultPie2?></span>
             <span class="count-name">USeP <?php echo $_SESSION['campus'] ?>  Total No. Voters</span>
           </div>
         </div>
 
-        <div class="col-md-3 card-body">
-          <div class="card-counter danger">
-            <img width="25%" src="../img/campus_logos/tagum_logo.png" alt="">
-            <span class="count-numbers"><?php  ?></span>
-            <span class="count-name">USeP <?php echo $_SESSION['campus'] ?>  Total Vote Cast</span>
-          </div>
-        </div>
+<!--        <div class="col-md-3 card-body">-->
+<!--          <div class="card-counter danger">-->
+<!--            <img width="25%" src="../img/campus_logos/tagum_logo.png" alt="">-->
+<!--            <span class="count-numbers">--><?php //echo $resultPie4?><!--</span>-->
+<!--            <span class="count-name">USeP --><?php //echo $_SESSION['campus'] ?><!--  Total Vote Cast</span>-->
+<!--          </div>-->
+<!--        </div>-->
 
         <div class="col-md-3 card-body">
           <div class="card-counter success">
-            <img width="25%" src = "../img/campus_logos/" . $campuss . "_logo.png"; alt="">
-            <span class="count-numbers"><?php echo $mabiniCount ?></span>
+            <img width="25%" src = "../img/campus_logos/tagum_logo.png"; alt="">
+            <span class="count-numbers"><?php echo $resultPie2 - $resultPie4 ?></span>
             <span class="count-name">USeP <?php echo $_SESSION['campus'] ?>  Vote to Cast</span>
           </div>
         </div>
@@ -213,24 +214,45 @@
         <div class="col-md-3 card-body">
           <div class="card-counter info">
             <img width="25%" src="../img/campus_logos/tagum_logo.png" alt="">
-            <span class="count-numbers"><?php echo $tagumCount ?></span>
-            <span class="count-name">USeP <?php echo $_SESSION['campus'] ?>  Candidates</span>
+            <span class="count-numbers"><?php echo $percentageFilledSC ?>%</span>
+            <span class="count-name">USeP <?php echo $_SESSION['campus'] ?>  Candidates SC</span>
           </div>
         </div>
+             <div class="col-md-3 card-body">
+                 <div class="card-counter danger">
+                     <img width="25%" src="../img/campus_logos/tagum_logo.png" alt="">
+                     <span class="count-numbers"><?php echo $percentageFilled ?>%</span>
+                     <span class="count-name">USeP <?php echo $_SESSION['campus'] ?>  Candidates LC</span>
+                 </div>
+             </div>
       </div>
 
           <div class="row">
-            <div class="col-lg-8">
-              <div class="card mb-3 shadow p-3 mb-5 bg-white rounded">
-                <div id="priv" class="card-header text-white">
-                  <i class="fas fa-chart-bar"></i>
-                  VOTERS’ TURNOUT PER COLLEGE</div>
-                <div class="card-body">
-                  <canvas id="myBarChart" width="100%" height="50"></canvas>
-                </div>
-                <div class="card-footer small text-muted">Bar Graph shows the distribution of data between the total number of voters and the total number of voters who voted per college</div>
+<!--            <div class="col-lg-8">-->
+<!--              <div class="card mb-3 shadow p-3 mb-5 bg-white rounded">-->
+<!--                <div id="priv" class="card-header text-white">-->
+<!--                  <i class="fas fa-chart-bar"></i>-->
+<!--                  VOTERS’ TURNOUT   </div>-->
+<!--                <div class="card-body">-->
+<!--                  <canvas id="myBarChart" width="100%" height="50"></canvas>-->
+<!--                </div>-->
+<!--                <div class="card-footer small text-muted">Bar Graph shows the distribution of data between the total number of voters and the total number of voters who voted per college</div>-->
+<!--              </div>-->
+<!--            </div>-->
+              <div class="col-md-8">
+                  <div class="card mb-3 shadow p-3 mb-5 bg-white rounded">
+                      <div class="card-header text-white" id="priv">
+                          <i class="fas fa-chart-pie"></i>
+                          VOTERS’ TURNOUT PER PROGRAM
+                      </div>
+                      <div class="card-body" style="text-align: center">
+                          <canvas id="myPieChart1" width="100%" height="48.5"></canvas>
+                      </div>
+                      <div class="card-footer small text-muted">
+                          Pie Chart shows the distribution of voters per program
+                      </div>
+                  </div>
               </div>
-            </div>
             <div class="col-lg-4">
               <div class="card mb-3 shadow p-3 mb-5 bg-white rounded">
                 <div class="card-header text-white" id="priv">
@@ -242,6 +264,17 @@
                 <div class="card-footer small text-muted" >Pie Chart shows the distribution of data between the total number of voters who vote and total number of voters who did not vote in <?php echo $_SESSION['campus']." campus" ?> </div>
               </div>
             </div>
+              <div class="col-lg-12">
+                  <div class="card mb-3 shadow p-3 mb-5 bg-white rounded">
+                      <div class="card-header text-white" id="priv">
+                          <i class="fas fa-chart-pie"></i>
+                          CAMPUS VOTERS’ TURNOUT PER PROGRAM</div>
+                      <div class="card-body">
+                          <canvas id="votersWhoVotedPieChart" width="100%" height="30"></canvas>
+                      </div>
+                      <div class="card-footer small text-muted" >Pie Chart shows the number of voter who already voted per program <?php echo $_SESSION['campus']." campus" ?> </div>
+                  </div>
+              </div>
           </div>
           </div>
         <!-- /.container-fluid -->
@@ -357,6 +390,7 @@
 
     <!-- time -->
     <script src="../js/time.js"></script>
+
 
       <script>
           Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -487,7 +521,134 @@
       </script> <!-- end of bar chart -->
 
    <!-- pie chart -->
-<script>
+      <script>
+          <?php
+          $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+          $queryPrograms = "SELECT p.college_program_name, COUNT(*) as program_count FROM tb_voter v
+        JOIN college_program p ON v.program_id = p.program_id
+        WHERE v.campus = 'Tagum'
+        GROUP BY v.program_id";
+          $resultPrograms = mysqli_query($conn, $queryPrograms);
+
+          $labelsPrograms = [];
+          $dataPrograms = [];
+          while ($row = mysqli_fetch_array($resultPrograms)) {
+              $labelsPrograms[] = $row['college_program_name'];
+              $dataPrograms[] = $row['program_count'];
+          }
+
+          $conn->close();
+          ?>
+          var ctxPie = document.getElementById("myPieChart1");
+          var pieChart = new Chart(ctxPie, {
+              type: 'pie',
+              data: {
+                  labels: <?php echo json_encode($labelsPrograms); ?>,
+                  datasets: [{
+                      data: <?php echo json_encode($dataPrograms); ?>,
+                      backgroundColor: ['#007AC7', '#00C853', '#FFC107', '#FF5722', '#9C27B0', '#673AB7', '#2196F3'],
+                      borderColor: '#fff',
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  plugins: {
+                      legend: {
+                          position: 'right',
+                          labels: {
+                              fontColor: 'white'
+                          }
+                      },
+                      datalabels: {
+                          formatter: (value, ctx) => {
+                              let label = ctx.chart.data.labels[ctx.dataIndex];
+                              return label + ": " + value + " votes";
+                          },
+                          color: '#fff',
+                          anchor: 'end',
+                          align: 'start',
+                          offset: 10,
+                          labels: {
+                              title: {
+                                  font: {
+                                      weight: 'bold'
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+      </script>
+      <?php
+      // Assuming you have a database connection established
+      $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+      $query = "SELECT cp.college_program_name,
+       COUNT(DISTINCT tv.studID) as voted
+FROM tb_voter v
+JOIN college_program cp ON v.program_id = cp.program_id
+LEFT JOIN tb_votes tv ON v.stud_id = tv.studID
+WHERE v.campus = 'Tagum'
+GROUP BY cp.college_program_name;";
+      $result = mysqli_query($conn, $query);
+
+      $labels = [];
+      $data = [];
+
+      while ($row = mysqli_fetch_assoc($result)) {
+          $labels[] = $row['college_program_name'];
+          $data[] = $row['voted'];
+      }
+
+      $conn->close();
+      ?>
+
+      <script>
+          var ctxPie = document.getElementById("votersWhoVotedPieChart");
+
+          var pieChart = new Chart(ctxPie, {
+              type: 'pie',
+              data: {
+                  labels: <?php echo json_encode($labels); ?>,
+                  datasets: [{
+                      data: <?php echo json_encode($data); ?>,
+                      backgroundColor: ['#007AC7', '#00C853', '#FFC107', '#FF5722', '#9C27B0', '#673AB7', '#2196F3'],
+                      borderColor: '#fff',
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  plugins: {
+                      legend: {
+                          position: 'right',
+                          labels: {
+                              fontColor: 'white'
+                          }
+                      },
+                      datalabels: {
+                          formatter: (value, ctx) => {
+                              let label = ctx.chart.data.labels[ctx.dataIndex];
+                              return label + ": " + value + " voters voted";
+                          },
+                          color: '#fff',
+                          anchor: 'end',
+                          align: 'start',
+                          offset: 10,
+                          labels: {
+                              title: {
+                                  font: {
+                                      weight: 'bold'
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+      </script>
+
+      <script>
   Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
   Chart.defaults.global.defaultFontColor = '#292b2c';
   var ctx = document.getElementById("myPieChart");
@@ -576,13 +737,13 @@
                 })
 
                 }
-               
-            }  
+
+            }
             });
           }
 
 
-           
+
            }
         });
     });
@@ -595,7 +756,7 @@
     if (sessionStorage.getItem('dontLoad') == null){
       $('#privacy-modal').modal('show');
       sessionStorage.setItem('dontLoad', 'true');
-    } 
+    }
     });
 </script>
 

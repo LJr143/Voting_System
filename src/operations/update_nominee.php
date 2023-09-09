@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Manila');
 require_once '../config/db_config.php';
 
 $statusMsg = '';
@@ -23,14 +24,24 @@ $tempName = $_SESSION['name'];
 $tempCampus = $_SESSION['username'];
 $dt = date('Y-m-d G:i:s');
 $action = "Edited candidate | \" ".$tempName." \" to"." \" ".$fname." ".$lname." \" ";
-$query2 ="INSERT into tblogs (name,action,timestamp) VALUES('$tempCampus','$action', '$dt')";
+$query4 = "Select admin_id from tbadmin where username = '$tempCampus'";
+$result = mysqli_query($conn, $query4);
+$row = mysqli_fetch_assoc($result);
+if ($row) {
+    $admin_id = $row['admin_id'];
 
-$query = "UPDATE tbnominees set fname= '$fname', lname= '$lname', campus ='$campus',college = '$college', program = '$program', year = '$year',
+    $query2 = "INSERT INTO tb_admin_action_logs(admin_id,action,log_action_date) VALUES('$admin_id', '$action','$dt')";
+
+    $query = "UPDATE tbnominees set fname= '$fname', lname= '$lname', campus ='$campus',college = '$college', program = '$program', year = '$year',
             party = '$party', position = '$position', stud_id = '$studID',indicator = '$indicator' where id = '$nominee_id' ";
 
-if(mysqli_query($conn, $query) == TRUE){
-    $success= "Nominee data updated successfully";
-    mysqli_query($conn,$query2);
+    if (mysqli_query($conn, $query) == TRUE) {
+        $success = "Nominee data updated successfully";
+        mysqli_query($conn, $query2);
+    } else {
+    }
+}else{
+    echo "Admin not found.";
 }
 
 

@@ -22,31 +22,37 @@ $tempCampus = $_SESSION['username'];
 $tempName = $_SESSION['voterFname']." ".$_SESSION['voterLname'];
 $dt = date('Y-m-d G:i:s');
 $action = "Edited voter | \" ".$tempName." \" to"." \" ".$newFname." ".$newLname." \" ";
-$query2 = "INSERT INTO tblogs(name,action,timestamp)VALUES('$tempCampus','$action','$dt')";
 
 
-$conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 // Fetch the college_id based on the newCollege name
-$queryCollege = "SELECT college_id FROM college_tbl WHERE college_name = '$newCollege'";
-$resultCollege = mysqli_query($conn, $queryCollege);
-$rowCollege = mysqli_fetch_assoc($resultCollege);
-$college_id = $rowCollege['college_id'];
+    $queryCollege = "SELECT college_id FROM college_tbl WHERE college_name = '$newCollege'";
+    $resultCollege = mysqli_query($conn, $queryCollege);
+    $rowCollege = mysqli_fetch_assoc($resultCollege);
+    $college_id = $rowCollege['college_id'];
 
 // Fetch the program_id based on the newProgram name
-$queryProgram = "SELECT program_id FROM college_program WHERE college_program_name = '$newProgram'";
-$resultProgram = mysqli_query($conn, $queryProgram);
-$rowProgram = mysqli_fetch_assoc($resultProgram);
-$program_id = $rowProgram['program_id'];
+    $queryProgram = "SELECT program_id FROM college_program WHERE college_program_name = '$newProgram'";
+    $resultProgram = mysqli_query($conn, $queryProgram);
+    $rowProgram = mysqli_fetch_assoc($resultProgram);
+    $program_id = $rowProgram['program_id'];
 
-$query = "UPDATE tb_voter SET fname = '$newFname', lname = '$newLname', year = '$newYear', stud_id = '$newStudID', password = '$newPass', email='$newEmail', college_id = '$college_id', program_id = '$program_id' WHERE id = '$voter_id'";
+$query4 = "Select admin_id from tbadmin where username = '$tempCampus'";
+$result = mysqli_query($conn, $query4);
+$row = mysqli_fetch_assoc($result);
+if ($row) {
+    $admin_id = $row['admin_id'];
+    $query2 = "INSERT INTO tb_admin_action_logs(admin_id,action,log_action_date) VALUES('$admin_id', '$action','$dt')";
 
-if(mysqli_query($conn,$query) == TRUE){
-    $success = 'true';
-    mysqli_query($conn,$query2);
-}else{
-    $statusMsg = "Unable to update voter";
+    $query = "UPDATE tb_voter SET fname = '$newFname', lname = '$newLname', year = '$newYear', stud_id = '$newStudID', password = '$newPass', email='$newEmail', college_id = '$college_id', program_id = '$program_id' WHERE id = '$voter_id'";
+
+    if (mysqli_query($conn, $query)) {
+        $success = 'true';
+        mysqli_query($conn, $query2);
+    } else {
+        $statusMsg = "Unable to update voter";
+    }
 }
-
 
 ?>  

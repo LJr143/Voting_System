@@ -1,6 +1,7 @@
 <?php
-session_start();
+
 include '../config/db_config.php';
+error_reporting(0);
 $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 $result = array();
@@ -8,7 +9,7 @@ $userID = mysqli_real_escape_string($conn, $_POST['userID']);
 
 $sql = "DELETE FROM tbadmin WHERE admin_id = '$userID'";
 
-if (mysqli_query($conn, $sql) == TRUE) {
+if (mysqli_query($conn, $sql)) {
     $result[] = array("result" => "success");
 } else {
     $error = $conn->error;

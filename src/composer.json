@@ -1,6 +1,8 @@
 {
   "require": {
     "phpoffice/phpspreadsheet": "^1.13",
-    "nette/mail": "^3.1"
+    "nette/mail": "^3.1",
+    "paragonie/sodium_compat": "^1.20",
+    "ext-mysqli": "*"
   }
 }

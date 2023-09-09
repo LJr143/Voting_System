@@ -6,9 +6,10 @@ date_default_timezone_set('Asia/Manila');
 $dbname = DB_NAME;
 $pdo = new PDO("mysql:host=localhost;dbname=$dbname", DB_USER, DB_PASS);
 $conn = new PDO("mysql:host=localhost;dbname=$dbname", DB_USER, DB_PASS);
-$username = strtolower(filter_var($_POST['username'], FILTER_SANITIZE_STRING));
-$password = strtolower(filter_var($_POST['password'], FILTER_SANITIZE_STRING));
-$campus = filter_var( $_POST['campus'], FILTER_SANITIZE_STRING);
+$username = strtolower(filter_var($_POST['username'], FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+$password = strtolower(filter_var($_POST['password'], FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+$campus = filter_var($_POST['campus'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
 
 
 //for watcher string to find
@@ -37,6 +38,7 @@ if(empty($username) || empty($password)){
     if($resultCheck > 0){
         foreach($stmt as $row){
             if(md5($password )== $row['password'] && $row['role'] == 'Central-Chairperson'){
+
 
                 $login_response[] = array("login_result" => "central_admin_success");
                 $_SESSION['username'] = $_POST['username'];

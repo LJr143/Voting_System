@@ -8,8 +8,8 @@
     $pdo = new PDO("mysql:host=localhost;dbname=$dbname", DB_USER, DB_PASS);
     $conn = new PDO("mysql:host=localhost;dbname=$dbname", DB_USER, DB_PASS); 
 
-    //$ip_address = strip_tags(file_get_contents('http://checkip.dyndns.com/'));
-    //$final = str_replace("Current IP CheckCurrent IP Address: ","",$ip_address);
+    $ip_address = strip_tags(file_get_contents('http://checkip.dyndns.com/'));
+    $final = str_replace("Current IP CheckCurrent IP Address: ","",$ip_address);
     $final = $_SERVER['REMOTE_ADDR']; 
     
     $all = 'false';

@@ -5,9 +5,8 @@
   require_once("../excel_script/xlsxwriter.class.php");
   ini_set("display_errors", 1);
   ini_set("log_errors", 1);
-  error_reporting(E_ALL & ~E_NOTICE); 
+  //error_reporting(E_ALL & ~E_NOTICE);
   date_default_timezone_set('Asia/Manila');
-  // include '../config/db_config.php';
 
   if(!isset($_SESSION['username'])){
     header("location: ../index_admin.php");

@@ -8,7 +8,7 @@ var table = $('#usersTable').DataTable( {
     "targets": -1,
     "data": null,
     "defaultContent": "<button class='btn btn-warning text-white' data-toggle='modal' data-target='#editUserModal'> <i class='fa fa-pencil-square' aria-hidden='true'></i></button> " +
-        "<button class='btn btn-danger' id='deleteUser' data-toggle='modal' data-target='#deleteUserModal'> <i class='fa fa-trash' aria-hidden='true'></i></button>\"\n"
+        "<button class='btn btn-danger' id='deleteUser' data-toggle='modal' data-target='#deleteUserModal'> <i class='fa fa-trash' aria-hidden='true'></i></button>\n"
 } ]
 } );
 
@@ -111,78 +111,93 @@ var buttons3 = new $.fn.dataTable.Buttons(table, {
         $('#newUserType option[value=' + data[4].replace("&gt;", "") + ']').attr('selected', 'selected');
         $("#newUsername").val(data[2]);
         var userID = data[5];
-
-        $("*[data-target='#deleteUserModal']").click(function() {
-            Swal.fire({
-                title: 'Delete User',
-                text: "Are you sure you want to permanently delete this user?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#7e0308',
-                cancelButtonColor: '#CFD4D7',
-                confirmButtonText: 'Delete',
-                cancelButtonText: "Cancel",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "POST",
-                        url: "../operations/deleteUser.php",
-                        data: { userID: userID },
-                        dataType: "json",
-                        beforeSend: function(data) {},
-                        success: function(data) {
-                            if (data.result === "success") {
-                                Swal.fire({
-                                    title: 'Success',
-                                    text: "User was deleted successfully",
-                                    imageUrl: "../img/gifs/success.gif",
-                                    confirmButtonColor: '#7e0308',
-                                    confirmButtonText: 'Ok'
-                                }).then((result) => {
-                                    if (result.value) {
-                                        location.reload();
-                                    }
-                                });
-                            } else {
-                                Swal.fire({
-                                    title: 'Error Deleting User',
-                                    text: "Something went wrong. Please try again!\n\n" + data.message,
-                                    imageUrl: "../img/gifs/error.gif",
-                                    confirmButtonColor: '#7e0308',
-                                    confirmButtonText: 'Ok'
-                                });
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.log("XHR status:", status);
-                            console.log("Error:", error);
-                            console.log("Response:", xhr.responseText);
-
-                            Swal.fire({
-                                title: 'Error Deleting User',
-                                text: 'Something went wrong. Please try again!',
-                                imageUrl: '../img/gifs/error.gif',
-                                confirmButtonColor: '#7e0308',
-                                confirmButtonText: 'Ok'
-                            });
-                        }
-                    });
-                }
-            });
-        });
+        $("#saveUserUpdate").data("userID", userID);
+        console.log(userID);
     });
 
+    $("*[data-target='#deleteUserModal']").click(function() {
+        var userID = $("#saveUserUpdate").data("userID");
+        if (userID) {
+            showDeleteConfirmation(userID);
+        }
+    });
+
+    function showDeleteConfirmation(userID) {
+        Swal.fire({
+            title: 'Delete User',
+            text: "Are you sure you want to permanently delete this user?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#7e0308',
+            cancelButtonColor: '#CFD4D7',
+            confirmButtonText: 'Delete',
+            cancelButtonText: "Cancel",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteUser(userID);
+            }
+        });
+    }
+
+    function deleteUser(userID) {
+        $.ajax({
+            type: "POST",
+            url: "../operations/deleteUser.php",
+            data: { userID: userID },
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                if (response[0].result === "success") {
+                    showSuccessMessage();
+                } else {
+                    showErrorDeleteMessage('Something went wrong. Please try again!');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("XHR status:", status);
+                console.log("Error:", error);
+                console.log("Response:", xhr.responseText);
+                showErrorDeleteMessage('Something went wrong. Please try again!');
+            }
+        });
+    }
+
+    function showSuccessMessage() {
+        Swal.fire({
+            title: 'Success',
+            text: "User was deleted successfully",
+            imageUrl: "../img/gifs/success.gif",
+            confirmButtonColor: '#7e0308',
+            confirmButtonText: 'Ok'
+        }).then((result) => {
+            if (result.value) {
+                location.reload();
+            }
+        });
+    }
+
+    function showErrorDeleteMessage(message) {
+        Swal.fire({
+            title: 'Error Deleting User',
+            text: "Something went wrong. Please try again!\n\n" + message,
+            imageUrl: "../img/gifs/error.gif",
+            confirmButtonColor: '#7e0308',
+            confirmButtonText: 'Ok'
+        });
+    }
 
 
 
+    $("#saveUserUpdate").click(function() {
+        // Retrieve userID from the data attribute
+        var userID = $(this).data("userID");
 
-    $("#saveUserUpdate").click(function(){
-                var newFirstName = $("#newFirstName").val();
-                var newLastName = $("#newLastName").val();
-                var newUserType = $("#newUserType").val();
-                var newUsername = $("#newUsername").val();
-                var newPassword = $("#newPassword").val();
-                var newConfirmPassword = $("#newConfirmPassword").val();
+        var newFirstName = $("#newFirstName").val();
+        var newLastName = $("#newLastName").val();
+        var newUserType = $("#newUserType").val();
+        var newUsername = $("#newUsername").val();
+        var newPassword = $("#newPassword").val();
+        var newConfirmPassword = $("#newConfirmPassword").val();
                 
                 if(newFirstName == "" || newLastName == "" || newUsername == "" || newPassword == "" || newConfirmPassword == ""){
                     toastr.warning("Please fill in all fields");
@@ -207,12 +222,13 @@ var buttons3 = new $.fn.dataTable.Buttons(table, {
                                     $.ajax({
                                     type:"POST",
                                     url:"../operations/updateUser.php",
-                                    data:{userID:userID, newFirstName:newFirstName, newLastName:newLastName, newUserType:newUserType, 
+                                    data:{userID: userID, newFirstName:newFirstName, newLastName:newLastName, newUserType:newUserType,
                                     newUsername:newUsername, newPassword:newPassword, newConfirmPassword:newConfirmPassword},
                                     dataType:"json",
                                     beforeSend:function(data){
+                                        console.log(userID);
                                      },
-                                    success:function(data){
+                                    success:function(){
                                         Swal.fire({
                                         title: 'Success',
                                         text: "User was updated successfully",

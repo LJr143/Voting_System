@@ -1,8 +1,7 @@
 <?php
 session_start();
-error_reporting(0);
-include '../config/db_config.php';
-//include 'includes/date_include.php';
+include 'config/db_config.php';
+include 'includes/date_include.php';
 
 if(isset($_SESSION['saved'])){
     header('location:voting/VotingStudentCouncil.php');
@@ -61,6 +60,25 @@ if($flag == 'true' && $flag1 == 'true' && $flag2 == 'true'){
         .text-responsive {
             font-size: calc(87% + 0.3vw + 0.3vh);
         }
+
+        .card-login {
+            background: linear-gradient(180deg, rgb(103, 34, 34) 0%, rgb(75, 16, 16) 35%, rgb(0, 0, 0) 100%);
+        }
+
+        .card-login .card-header {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 800px) {
+            #logoUserLog {
+                display: none;
+            }
+
+            .card-login .card-header {
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 
@@ -89,7 +107,7 @@ if($flag == 'true' && $flag1 == 'true' && $flag2 == 'true'){
 
 <div class="container">
     <div class="card card-login mx-auto mt-5 shadow p-3 mb-5 rounded text-white" style="background: linear-gradient(180deg, rgb(103,34,34) 0%, rgb(75,16,16) 35%, rgb(0,0,0) 100%);   ">
-        <img id="logo" src="img/voting.png"width="100%" alt="">
+        <img id="logoUserLog" src="img/voting.png"width="100%" alt="">
         <div class="card-header text-center border-light"><strong> Voter | Login Here!</strong></div>
         <div></div>
         <div class="card-body">
@@ -99,7 +117,7 @@ if($flag == 'true' && $flag1 == 'true' && $flag2 == 'true'){
                         <div class="col-md-12">
                             <select id="mode" name="mode" class="custom-select" id="inputGroupSelect04">
                                 <option selected value="mode">Choose Mode of Voting</option>
-                                <option value="Student Council and Local Council">Student Council and Local Council</option>
+                                <option value="StudentCouncilandLocalCouncil">Student Council and Local Council</option>
                             </select>
                         </div>
                     </div>
@@ -125,20 +143,20 @@ if($flag == 'true' && $flag1 == 'true' && $flag2 == 'true'){
                         <label for="inputUsername">Student ID</label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="form-label-group">
-                        <input type="password" id="inputPassword" class="form-control" placeholder="mm-dd-yyy" required="required">
-                        <label for="inputPassword">mm-dd-yyyy</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customControlInline" name="remember"
-                               onclick="showPassword()">
-                        <label class="custom-control-label" for="customControlInline">Show Password<menu type="context"></menu>
-                        </label>
-                    </div>
-                </div>
+<!--                <div class="form-group">-->
+<!--                    <div class="form-label-group">-->
+<!--                        <input type="password" id="inputPassword" class="form-control" placeholder="mm-dd-yyy" required="required">-->
+<!--                        <label for="inputPassword">mm-dd-yyyy</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <div class="custom-control custom-checkbox">-->
+<!--                        <input type="checkbox" class="custom-control-input" id="customControlInline" name="remember"-->
+<!--                               onclick="showPassword()">-->
+<!--                        <label class="custom-control-label" for="customControlInline">Show Password<menu type="context"></menu>-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <!--End Form For Student-->
                 <button id="login" class="btn btn-primary btn-block">LOGIN</button>
             </div>
@@ -148,35 +166,35 @@ if($flag == 'true' && $flag1 == 'true' && $flag2 == 'true'){
 
 
 <!-- Messenger Chat Plugin Code -->
-<div id="fb-root"></div>
+<!--<div id="fb-root"></div>-->
 
 <!-- Your Chat Plugin code -->
-<div id="fb-customer-chat" class="fb-customerchat">
-</div>
+<!--<div id="fb-customer-chat" class="fb-customerchat">-->
+<!--</div>-->
 
-<script>
-    var chatbox = document.getElementById('fb-customer-chat');
-    chatbox.setAttribute("page_id", "535744283289207");
-    chatbox.setAttribute("attribution", "biz_inbox");
-</script>
+<!--<script>-->
+<!--    var chatbox = document.getElementById('fb-customer-chat');-->
+<!--    chatbox.setAttribute("page_id", "535744283289207");-->
+<!--    chatbox.setAttribute("attribution", "biz_inbox");-->
+<!--</script>-->
 
 <!-- Your SDK code -->
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            xfbml            : true,
-            version          : 'v14.0'
-        });
-    };
-
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
+<!--<script>-->
+<!--    window.fbAsyncInit = function() {-->
+<!--        FB.init({-->
+<!--            xfbml            : true,-->
+<!--            version          : 'v14.0'-->
+<!--        });-->
+<!--    };-->
+<!---->
+<!--    (function(d, s, id) {-->
+<!--        var js, fjs = d.getElementsByTagName(s)[0];-->
+<!--        if (d.getElementById(id)) return;-->
+<!--        js = d.createElement(s); js.id = id;-->
+<!--        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';-->
+<!--        fjs.parentNode.insertBefore(js, fjs);-->
+<!--    }(document, 'script', 'facebook-jssdk'));-->
+<!--</script>-->
 
     <!-- Bootstrap core JavaScript-->
     <script src="jquery/jquery-3.6.0.min.js"></script>
@@ -244,7 +262,7 @@ if($flag == 'true' && $flag1 == 'true' && $flag2 == 'true'){
             $(function () {
                 $("#login").click(function (event) {
                     var username = $("#inputUsername").val();
-                    var password = $("#inputPassword").val();
+                    // var password = $("#inputPassword").val();
                     var campus = $("#campus").val();
                     var mode = $("#mode").val();
                     $.ajax({
@@ -252,7 +270,7 @@ if($flag == 'true' && $flag1 == 'true' && $flag2 == 'true'){
                         url: "voting-operations/AjaxLogin.php",
                         data: {
                             username: username,
-                            password: password,
+                            // password: password,
                             campus: campus,
                             mode: mode,
                             resend: "None"

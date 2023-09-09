@@ -1,3 +1,9 @@
+
+<?php
+error_reporting(0);
+
+?>
+
 <?php
   $campus = $_SESSION['campus'];
   $conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);

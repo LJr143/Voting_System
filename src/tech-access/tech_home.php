@@ -162,39 +162,39 @@
             <li class="breadcrumb-item active">Overview</li>
           </ol>
 
-          <div class="row">
-        <div class="col-md-3 card-body">
-          <div class="card-counter primary">
-            <img width="25%" src="../img/campus_logos/obrero_logo.png" alt="">
-            <span class="count-numbers"><?php echo $obreroCount ?></span>
-            <span class="count-name">USeP Obrero Candidates</span>
-          </div>
-        </div>
+            <div class="row">
+                <div class="col-md-3 card-body">
+                    <div class="card-counter primary">
+                        <img width="25%" src="../img/campus_logos/tagum_logo.png" alt="">
+                        <span class="count-numbers"><?php echo $mCountC ?></span>
+                        <span class="count-name">USeP Tagum No. Candidates</span>
+                    </div>
+                </div>
 
-        <div class="col-md-3 card-body">
-          <div class="card-counter danger">
-            <img width="25%" src="../img/campus_logos/mintal_logo.png" alt="">
-            <span class="count-numbers"><?php echo $mintalCount ?></span>
-            <span class="count-name">USeP Mintal Candidates</span>
-          </div>
-        </div>
+                <div class="col-md-3 card-body">
+                    <div class="card-counter danger">
+                        <img width="25%" src="../img/campus_logos/tagum_logo.png" alt="">
+                        <span class="count-numbers"><?php echo $vCount ?></span>
+                        <span class="count-name">USeP Tagum Total Voters</span>
+                    </div>
+                </div>
 
-        <div class="col-md-3 card-body">
-          <div class="card-counter success">
-            <img width="25%" src="../img/campus_logos/mabini_logo.png" alt="">
-            <span class="count-numbers"><?php echo $mabiniCount ?></span>
-            <span class="count-name">USeP Mabini Candidates</span>
-          </div>
-        </div>
+                <div class="col-md-3 card-body">
+                    <div class="card-counter success">
+                        <img width="25%" src="../img/campus_logos/tagum_logo.png" alt="">
+                        <span class="count-numbers"><?php echo $tagumCount ?></span>
+                        <span class="count-name">USeP Tagum Candidates</span>
+                    </div>
+                </div>
 
-        <div class="col-md-3 card-body">
-          <div class="card-counter info">
-            <img width="25%" src="../img/campus_logos/tagum_logo.png" alt="">
-            <span class="count-numbers"><?php echo $tagumCount ?></span>
-            <span class="count-name">USeP Tagum Candidates</span>
-          </div>
-        </div>
-      </div>
+                <div class="col-md-3 card-body">
+                    <div class="card-counter info">
+                        <img width="25%" src="../img/campus_logos/tagum_logo.png" alt="">
+                        <span class="count-numbers"><?php echo $vCountC ?></span>
+                        <span class="count-name">USeP Tagum Total Vote Casted</span>
+                    </div>
+                </div>
+            </div>
 
           <div class="row">
             <div class="col-lg-8">

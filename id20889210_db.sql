@@ -25,7 +25,7 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`id20889210_db_conn`@`%` PROCEDURE `CheckProxyVoting` (IN `ip_address` VARCHAR(255), OUT `is_proxy` VARCHAR(5))   BEGIN
+CREATE PROCEDURE `CheckProxyVoting` (IN `ip_address` VARCHAR(255), OUT `is_proxy` VARCHAR(5))   BEGIN
     DECLARE proxy_count INT;
 
     -- Check if the IP address exists in the voter_pub_ip table
@@ -41,7 +41,7 @@ CREATE DEFINER=`id20889210_db_conn`@`%` PROCEDURE `CheckProxyVoting` (IN `ip_add
     END IF;
 END$$
 
-CREATE DEFINER=`id20889210_db_conn`@`%` PROCEDURE `insert_admin_log` (IN `p_username` VARCHAR(255), IN `p_action` VARCHAR(255), IN `p_log_action_date` DATETIME)   BEGIN
+CREATE PROCEDURE `insert_admin_log` (IN `p_username` VARCHAR(255), IN `p_action` VARCHAR(255), IN `p_log_action_date` DATETIME)   BEGIN
 INSERT INTO tb_admin_action_logs (admin_id, action, log_action_date)
 SELECT tbadmin.admin_id, p_action, p_log_action_date
 FROM tbadmin
@@ -474,7 +474,7 @@ INSERT INTO `tb_votes` (`id`, `studID`, `nameCand`, `campus`, `voter_college`, `
 CREATE TABLE `voter_pub_ip` (
   `id` int(10) UNSIGNED NOT NULL,
   `public_ip_address` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `voter_pub_ip`
@@ -556,7 +556,7 @@ CREATE TABLE `vw_voter` (
 --
 DROP TABLE IF EXISTS `vw_program`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`id20889210_db_conn`@`%` SQL SECURITY DEFINER VIEW `vw_program`  AS SELECT `college_program`.`program_id` AS `id`, `college_program`.`college_program_name` AS `college_program_name`, `college_program`.`campus` AS `campus`, `college_tbl`.`college_name` AS `college_name` FROM (`college_program` left join `college_tbl` on(`college_program`.`college_id` = `college_tbl`.`college_id`)) ;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vw_program`  AS SELECT `college_program`.`program_id` AS `id`, `college_program`.`college_program_name` AS `college_program_name`, `college_program`.`campus` AS `campus`, `college_tbl`.`college_name` AS `college_name` FROM (`college_program` left join `college_tbl` on(`college_program`.`college_id` = `college_tbl`.`college_id`)) ;
 
 -- --------------------------------------------------------
 
@@ -565,7 +565,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`id20889210_db_conn`@`%` SQL SECURITY DEFINER
 --
 DROP TABLE IF EXISTS `vw_voter`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`id20889210_db_conn`@`%` SQL SECURITY DEFINER VIEW `vw_voter`  AS SELECT `tb_voter`.`stud_id` AS `stud_id`, `tb_voter`.`fname` AS `fname`, `tb_voter`.`lname` AS `lname`, `tb_voter`.`year` AS `year`, `tb_voter`.`password` AS `password`, `tb_voter`.`email` AS `email`, `tb_voter`.`campus` AS `campus`, `college_tbl`.`college_name` AS `college_name`, `college_program`.`college_program_name` AS `college_program_name` FROM ((`tb_voter` left join `college_tbl` on(`college_tbl`.`college_id` = `tb_voter`.`college_id`)) left join `college_program` on(`college_program`.`program_id` = `tb_voter`.`program_id`)) ;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vw_voter`  AS SELECT `tb_voter`.`stud_id` AS `stud_id`, `tb_voter`.`fname` AS `fname`, `tb_voter`.`lname` AS `lname`, `tb_voter`.`year` AS `year`, `tb_voter`.`password` AS `password`, `tb_voter`.`email` AS `email`, `tb_voter`.`campus` AS `campus`, `college_tbl`.`college_name` AS `college_name`, `college_program`.`college_program_name` AS `college_program_name` FROM ((`tb_voter` left join `college_tbl` on(`college_tbl`.`college_id` = `tb_voter`.`college_id`)) left join `college_program` on(`college_program`.`program_id` = `tb_voter`.`program_id`)) ;
 
 --
 -- Indexes for dumped tables

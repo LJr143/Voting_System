@@ -3,8 +3,7 @@
     include '../config/db_config.php';
     include '../voting-operations/Decryption.php';
     include '../voting-operations/Local_Council/CandidateCarouselLocal.php';
-    //error_reporting(0);
-
+    error_reporting(0);
     $connect = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 
     if(isset($_SESSION["saved"])){
@@ -316,11 +315,14 @@
     if (campus == "Tagum") {
       if (program == "BS in Agricultural and Biosystems Engineering" || program ==
         "Bachelor of Science in Agricultural Engineering") {
-        lcname = "Society of Agricultural and Biosystem Engineering Students";
-      } else if (program == "Bachelor of Elementary Education" || program ==
-        "Bachelor of Special Needs Education" || program == "Bachelor of Early Childhood Education") {
+        lcname = "Society of Agricultural and Biosystems Engineering Students";
+      } else if (program == "Bachelor of Elementary Education") {
         lcname = "Organization of Future Elementary Educators";
-      } else if (program == "BSEd" || program == "Bachelor of Technical-vocational Teacher Education") {
+      }else if (program == "Bachelor of Early Childhood Education") {
+          lcname = "Society of Future Bachelor of Early Childhood Educators";
+      }
+
+      else if (program == "Bachelor of Secondary Education") {
         lcname = "Association of Future Secondary Teachers";
       } else if (program == "Bachelor of Science in Information Technology") {
         lcname = "Society of Information and Technology Students";

@@ -1,20 +1,31 @@
 <?php
 session_start();
-error_reporting(0);
+//error_reporting(0);
 date_default_timezone_set('Asia/Manila');
 require_once '../config/db_config.php';
 require_once("../excel_script/db-class.php");
 require_once("../excel_script/xlsxwriter.class.php");
 
-ini_set("display_errors", 1);
-ini_set("log_errors", 1);
-error_reporting(E_ALL & ~E_NOTICE);
+//ini_set("display_errors", 1);
+//ini_set("log_errors", 1);
+//error_reporting(E_ALL & ~E_NOTICE);
 
 if(!isset($_SESSION['username'])){
     header("location: ../index_admin.php");
 }
 
 if(isset($_POST['export'])){
+    $action = "Exported Voters Information "."$campus"." campus";
+    $query4 = "Select admin_id from tbadmin where username = '$tempCampus'";
+    $result = mysqli_query($conn, $query4);
+    $row = mysqli_fetch_assoc($result);
+    if ($row) {
+        $admin_id = $row['admin_id'];
+        $query2 = "INSERT INTO tb_admin_action_logs(admin_id,action,log_action_date) VALUES('$admin_id', '$action','$dt')";
+        mysqli_query($conn,$query2);
+    }else {
+
+    }
     function getData() {
         $campus_name = $_SESSION['campus'];
         $db = new MY_SQLDB();
@@ -1026,9 +1037,9 @@ include '../operations/insert_voter.php';
                 var currPass = $("#currPass").val();
                 var newPass = $("#newPass").val();
                 {
-                    if(currPass == "" || newPass == ""){
-                        toastr.warning("Please fill in all fields")
-                    }else{
+                    // if(currPass == "" || newPass == ""){
+                    //     toastr.warning("Please fill in all fields")
+                    // }else{
                         $.ajax({
                             type: "POST",
                             url: "../operations/update_password.php",
@@ -1061,7 +1072,7 @@ include '../operations/insert_voter.php';
 
                             }
                         });
-                    }
+                    // }
 
                 }
             });

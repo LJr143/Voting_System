@@ -6,60 +6,56 @@
     require_once("../excel_script/xlsxwriter.class.php");
     ini_set("display_errors", 1);
     ini_set("log_errors", 1);
-    error_reporting(E_ALL & ~E_NOTICE); 
-    include '../operations/insert_nominee.php';
+    error_reporting(E_ALL & ~E_NOTICE);
+ include '../operations/insert_nominee.php';
 
-    
 
-    error_reporting(0);
     if(!isset($_SESSION['username'])){
       header("location: ../index_admin.php");
     }
+if(isset($_POST['export'])){
+    $action = "Exported Candidates Information "."$campus"." campus";
+$query4 = "Select admin_id from tbadmin where username = '$tempCampus'";
+$result = mysqli_query($conn, $query4);
+$row = mysqli_fetch_assoc($result);
+if ($row) {
+    $admin_id = $row['admin_id'];
+    $query2 = "INSERT INTO tb_admin_action_logs(admin_id,action,log_action_date) VALUES('$admin_id', '$action','$dt')";
+    mysqli_query($conn,$query2);
+}else {
 
-
-    if(isset($_POST['export'])){
-        function getData() {
-            $campus_name = $_SESSION['campus'];
-            $db = new MY_SQLDB();
-            $sql = "SELECT fname, lname, campus, college, program, year, party, position, stud_id FROM tbnominees WHERE campus = ?";
-            $stmt = $db->prepare($sql);
-            $stmt->bind_param("s", $campus_name);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            $data = array();
-            while ($row = $result->fetch_assoc()) {
-                $data[] = $row;
-            }
-
-            $sheet_titles = $db->get_column_names();
-            array_unshift($data, $sheet_titles);
-
-            $stmt->close();
-            $db->close_connection();
-
-            return $data;
-        }
-
-
-        $data = getData();
-        $filename = "nominees_data"."_".date("Y-m-d").".xlsx";
-
-        $writer = new XLSXWriter();
-        $writer->writeSheet($data);
-        $writer->writeToFile($filename);
-        
-        
-        header('Content-disposition: attachment; filename="'.XLSXWriter::sanitize_filename($filename).'"');
-        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        header('Content-Transfer-Encoding: binary');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        readfile($filename);
-        exit(0);
-            
+}
+    function getData() {
+        $campus_name = $_SESSION['campus'];
+        $db = new MY_SQLDB();
+        $sql = "SELECT fname,lname,campus,college,program,year,stud_id,party from tbnominees where campus = '$campus_name' ";
+        $rows = $db->get_rows($sql);
+        $sheet_titles = $db->get_column_names();
+        $data = array_merge(array(), $rows);
+        array_unshift($data , $sheet_titles);
+        $db->close_connection();
+        return $data;
     }
-    include '../includes/add_nominee_add.php';
+
+    $data = getData();
+    $filename = "candidate_data"."_".date("Y-m-d").".xlsx";
+
+    $writer = new XLSXWriter();
+    $writer->writeSheet($data);
+    $writer->writeToFile($filename);
+
+
+    header('Content-disposition: attachment; filename="'.XLSXWriter::sanitize_filename($filename).'"');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header('Content-Transfer-Encoding: binary');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    readfile($filename);
+    exit(0);
+
+}
+include '../includes/add_nominee_add.php';
+
 ?>
 
 <!DOCTYPE html>

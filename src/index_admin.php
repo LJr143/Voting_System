@@ -37,7 +37,26 @@
     <link rel="stylesheet" href="css/toastr.css">
       <link rel="stylesheet" href="headerStyle.css">
     <!-- <link rel="stylesheet" href="css/style.css"> -->
+      <style>
+          .card-login {
+              background: linear-gradient(180deg, rgb(103, 34, 34) 0%, rgb(75, 16, 16) 35%, rgb(0, 0, 0) 100%);
+          }
 
+          .card-login .card-header {
+              font-size: 18px;
+              font-weight: bold;
+          }
+
+          @media (max-width: 800px) {
+              #logoAdmin {
+                  display: none;
+              }
+
+              .card-login .card-header {
+                  font-size: 24px;
+              }
+          }
+      </style>
 
   </head>
 
@@ -66,7 +85,7 @@
 
     <div class="container">
       <div class="card card-login mx-auto mt-5 shadow p-3 mb-5 rounded text-white" style="background: linear-gradient(180deg, rgb(103,34,34) 0%, rgb(75,16,16) 35%, rgb(0,0,0) 100%);   ">
-              <img id="logo" src="img/admin_log.png"width="100%" alt="">
+              <img style="max-width: 100%;" id="logoAdmin" src="img/admin_log.png"width="100%" alt="">
           <div class="card-header text-center border-light"><strong> Admin | Login Here!</strong></div>
         <div></div>
         <div class="card-body">
@@ -76,7 +95,7 @@
             <div class="form-row">
             <div class="col-md-12">
              <select id="campus" name="campus" class="custom-select" id="inputGroupSelect04">
-                <option selected value="campus">Choose Acces Type...</option>
+                <option selected value="campus">Choose Access Type...</option>
                 <option value="Mabini">Mabini</option>
                 <option value="Tagum">Tagum</option>
                 <option value="Mabini-Watcher">Mabini Watcher</option>
@@ -204,7 +223,7 @@
                     confirmButtonText: 'Try Again',
                     }).then((result) => {
                     if (result.value) {
-                        // location.reload();
+                        location.reload();
                     }
                     })
                   }else if(login_result == "watcher_success"){
@@ -264,7 +283,12 @@
                   }
                    
              }
-          }
+                console.log(response);
+          },
+                error: function(xhr, status, error) {
+                    // Handle error
+                    console.log("Error: " + xhr.responseText);
+                }
             });
             }
         });
@@ -278,7 +302,7 @@
 
   function showPassword() {
   var x = document.getElementById("inputPassword");
-  if (x.type === "password") {
+  i f (x.type === "password") {
     x.type = "text";
   } else {
     x.type = "password";

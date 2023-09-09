@@ -1,5 +1,6 @@
 
 <?php
+error_reporting(0);
   $campus = $_SESSION['campus'];
   $conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
   $query  = "SELECT * FROM tbnominees where campus = '$campus'order by lname";

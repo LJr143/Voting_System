@@ -12,26 +12,32 @@
     $party = filter_var($_POST['politicalParty'],FILTER_SANITIZE_STRING);
     $campus = $_SESSION['campus'];
     $code = randomCode();
-   
-    
+
+$conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
     //logs
     $tempCampus = $_SESSION['username'];
     $action = "Added new Party "."\" ".$party."\" ";
     $dt = date('Y-m-d G:i:s');
 
-    $query2 = "INSERT INTO tblogs(name,action,timestamp) VALUES('$tempCampus', '$action','$dt')";
+$query4 = "Select admin_id from tbadmin where username = '$tempCampus'";
+$result = mysqli_query($conn, $query4);
+$row = mysqli_fetch_assoc($result);
+if ($row) {
+    $admin_id = $row['admin_id'];
+    $query2 = "INSERT INTO tb_admin_action_logs(admin_id,action,log_action_date) VALUES('$admin_id', '$action','$dt')";
 
-    $conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 
     $query = "INSERT into tbparty (party_name, campus, code) VALUES('$party', '$campus', '$code')";
 
-    if(mysqli_query($conn,$query) == TRUE){
+    if (mysqli_query($conn, $query)) {
         $success = 'true';
-        mysqli_query($conn,$query2);
-    }else{
+        mysqli_query($conn, $query2);
+    } else {
         $statusMsg = "Unable to political party";
     }
-
+}else {
+    echo mysqli_error($conn);
+}
 
 
     function randomCode() {

@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="../css/slider.css" />
   <link rel="stylesheet" href="../css/login.css" />
   <link rel="stylesheet" href="../css/toastr.css" />
+    <link rel="stylesheet" href="../headerStyle.css">
 
   <style>
     .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
@@ -59,15 +60,26 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand navbar-dark static-top">
-    <div class="container">
-      <img id="logo" src="../img/usep_logo.png" width="5%" alt="" />
-      <h4 id="title" class="text-center text-white">
-        USeP E-Voting | Voting Page
-      </h4>
-      <img id="logo" class="float-right" src="../img/COC Logo2.png" width="5%" alt="" />
+<div class="header container-fluid d-flex justify-content-center">
+    <div class="_head  d-flex text-white">
+        <p>09096763912</p>
+        <p class="center-Text">tsc-comelec@usep.edu.ph</p>
+        <p>tsc Comelec</p>
     </div>
-  </nav>
+</div>
+<div class="main-header container-fluid">
+    <div class="row header-main">
+        <div class="col-md-8 px-5  text-white d-flex align-content-center align-items-center ">
+            <img class="img_logo img-fluid d-none d-md-block" id="logo" src="../img/usep_logo.png" alt="">
+            <p class="pt-1 d-none d-md-block">University of Southeastern Philippines Tagum - Mabini Campus <br> National Highway Apokon RD. Tagum City <br>Davao Del Norte Philippines</p>
+        </div>
+        <div class="col-md-4 p-0 text-white d-flex justify-content-center align-items-center text-center" style="background-color: maroon;">
+            <img id="logo" class="img_logo p-1 img-fluid" src="../img/comelec_logo.png" alt="">
+            <p class="h1" style="font-size: 18px;margin-right: 10px;">USeP E-Voting System Environment  <br><q class="h6 text-white-50" style="font-size: 12px;">We build Dreams without limits</q></p>
+            <img class="img_logo p-1" src="../img/tsc_logo.png" alt="">
+        </div>
+    </div>
+</div>
 
   <div class="container">
     <div class="card card-login mx-auto mt-5 shadow p-3 mb-5 bg-white rounded">
