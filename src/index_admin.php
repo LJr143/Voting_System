@@ -103,7 +103,6 @@
                 <option value="Central-Chairperson">Central Chairperson</option>
                 <option value="Monitoring">Monitoring</option>
                 <option value="Technical-Officer">Technical Officer</option>
-                 <option value="SSG">School of Medicine Admin</option>
              </select>
              <span id = "errorCampus"style ="color:red;"></span>
             </div>
@@ -259,11 +258,7 @@
 
                     window.location = 'central-admin/please_wait.php';
                     
-                  }else if(login_result == "ssg_success"){
-
-                        window.location = 'ssg/please_wait.php';
-
-                    }
+                  }
                     else if(login_result == "tech_success"){
             
                     window.location = 'tech-access/please_wait.php';

@@ -184,8 +184,9 @@
           Add Party</button>
         <button class="btn btn-secondary" data-toggle="modal" data-target="#addPositionModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Local Council Position</button>
         <button class="btn btn-secondary" data-toggle="modal" data-target="#addCouncilPositionModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Student Council Position</button>
+           <button class="btn btn-secondary" data-toggle="modal" data-target="#addSOMCouncilPositionModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add SOM Student Council Position</button>
 
-      </div>
+       </div>
 
       <br>
 
@@ -328,6 +329,41 @@
       </div>
     </div>
     </div>
+        <!-- add School of Medicine student council position Modal-->
+        <div class="modal fade" id="addSOMCouncilPositionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus-square" aria-hidden="true"></i> Add Position</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="background:#CC6464; color:white" class="card-header"><i class="fas fa-object-group"></i> Add School of Medicine Student Council Position</div>
+                        <div class="card-body">
+                            <div  id="addPoliticalPartyForm">
+                                <!-- polictical party field -->
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-label-group">
+                                                <input type="text" name="somcouncilPosition" id="somcouncilPosition" class="form-control" placeholder="Position Name">
+                                                <label for="somcouncilPosition">Position Name</label>
+                                                <span id = "errorCouncilPosition"style ="color:red;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end of politacal party field -->
+                            </div> <!-- end of form -->
+                        </div>
+                        <div class="modal-footer">
+                            <button id="addSOMCampusPosition"  class="btn btn-block" name="submit" type="submit" ><i class="fa fa-plus" aria-hidden="true"></i> Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <!-- position add and edit modal -->
     <div>
@@ -451,6 +487,8 @@
 
 
 
+
+
      <!-- Edit Modal -->
      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog" role="document">
@@ -524,6 +562,7 @@
                                 <a class="nav-item nav-link active text-white" id="nav-oarty-tab" data-toggle="tab" href="#nav-party" role="tab" aria-controls="nav-party" aria-selected="true">Political Party</a>
                                 <a class="nav-item nav-link text-white" id="nav-position-tab" data-toggle="tab" href="#nav-position" role="tab" aria-controls="nav-position" aria-selected="false">Local Council Positions</a>
                                 <a class="nav-item nav-link text-white" id="nav-council-tab" data-toggle="tab" href="#nav-council" role="tab" aria-controls="nav-council" aria-selected="false">Student Council Positions</a>
+                                <a class="nav-item nav-link text-white" id="nav-council-som-tab" data-toggle="tab" href="#nav-council-som" role="tab" aria-controls="nav-council-som" aria-selected="false">SOM Student Council Positions</a>
 
                             </div>
                         </nav>
@@ -589,6 +628,26 @@
                                   <?php endforeach; ?>
                                   </tbody>
                                   </table>
+                            </div>
+                            <div class="tab-pane fade text-white" id="nav-council-som" role="tabpanel" aria-labelledby="nav-council-som-tab">
+                                <table id="somcouncilTB" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Position</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach($somcouncils as $position) :  ?>
+                                        <tr>
+                                            <td><?= $position['code']; ?></td>
+                                            <td><?= $position['position_name']; ?></td>
+                                            <td></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
                             </div>
 
                         </div>
@@ -657,7 +716,7 @@
           <div style="background:#CC6464; color:white" class="card-header"><i class="fas fa-object-group"></i> Add Political Party</div>
           <div class="card-body">
          <div  id="addPoliticalPartyForm">
-            <!-- polictical party field -->
+            <!-- political party field -->
             <div class="form-group">
             <div class="form-row">
             <div class="col-md-12">
@@ -668,7 +727,7 @@
             </div>
             </div>
             </div>
-            </div> <!-- end of politacl party field -->
+            </div> <!-- end of political party field -->
           </div> <!-- end of form -->
           </div>
           <div class="modal-footer">
@@ -713,8 +772,6 @@
      <script src="../js/time.js"></script>
 
 
-     <!-- chat room -->
-     <div id="rt-8896a2e1910b867224e9470355f977b6" data-floating="true" data-side="right" data-width="700" data-height="500" data-counter="14,23"></div> <script src="https://rumbletalk.com/client/?HYtucjo~"></script>    <!-- script bar chart -->
 
 
  <!-- // allscripts -->
@@ -843,6 +900,41 @@
             }
         });
     });
+     $(function () {
+         $("#addSOMCampusPosition").click(function (event) {
+             var position = $("#somcouncilPosition").val();
+
+             {
+                 if(position == ""){
+                     toastr.warning("Please fill in all fields");
+
+                 }else{
+                     $.ajax({
+                         type: "POST",
+                         url: "../operations/insert_som_council_position.php",
+                         data: {councilPosition:position},
+                         dataType:'text',
+                         success:function(data){
+                             Swal.fire({
+                                 title: 'Success',
+                                 text: "Data saved successfully!",
+                                 icon: 'success',
+                                 confirmButtonColor: '#A24D4D',
+                                 confirmButtonText: 'Close'
+                             }).then((result) => {
+                                 if (result.value) {
+                                     location.reload();
+                                 }
+                             })
+                         }
+                     });
+
+                 }
+
+
+             }
+         });
+     });
 });
  </script>
 
@@ -1055,6 +1147,82 @@
     
 });
  </script>
+
+         <!-- som council position event -->
+
+         <script>
+             $(document).ready(function() {
+                 var table = $('#somcouncilTB').DataTable( {
+                     "columnDefs": [ {
+                         "targets": -1,
+                         "data": null,
+                         "defaultContent": "<button class='btn btn-success text-white' data-toggle='modal' data-target='#editCouncilModal'> <i class='fa fa-pencil-square-o' aria-hidden='true'></i> Edit</button> <button class='btn btn-danger' id='deleteCouncil' data-toggle='modal' data-target='#deleteCouncilModal'> <i class='fa fa-trash' aria-hidden='true'></i> Delete</button>"
+                     } ]
+                 } );
+
+                 $('#somcouncilTB tbody').on( 'click', 'button', function () {
+                     var data = table.row( $(this).parents('tr') ).data();
+                     $("#newCouncilPosition").val(data[1]);
+
+                     $(function () {
+                         $("#saveCouncilChange").click(function (event) {
+                             var newCouncilPosition = $("#newCouncilPosition").val();
+                             var id = data[0];
+                             {
+                                 $.ajax({
+                                     type: "POST",
+                                     url: "../operations/edit_som_council_position.php",
+                                     data: {newCouncilPosition:newCouncilPosition,id:id},
+                                     dataType:'text',
+                                     success:function(data){
+                                         Swal.fire({
+                                             title: 'Success',
+                                             text: "Data saved successfully!",
+                                             icon: 'success',
+                                             confirmButtonColor: '#A24D4D',
+                                             confirmButtonText: 'Close'
+                                         }).then((result) => {
+                                             if (result.value) {
+                                                 location.reload();
+                                             }
+                                         })
+                                     }
+                                 });
+                             }
+                         });
+                     });
+
+                     $(function () {
+                         $("#saveCouncilDelete").click(function (event) {
+                             var position = data[1];
+                             var id = data[0];
+                             {
+                                 $.ajax({
+                                     type: "POST",
+                                     url: "../operations/delete_som_council_position.php",
+                                     data: {position:position,id:id},
+                                     dataType:'text',
+                                     success:function(data){
+                                         Swal.fire({
+                                             title: 'Success',
+                                             text: "Data deleted successfully!",
+                                             icon: 'success',
+                                             confirmButtonColor: '#A24D4D',
+                                             confirmButtonText: 'Close'
+                                         }).then((result) => {
+                                             if (result.value) {
+                                                 location.reload();
+                                             }
+                                         })
+                                     }
+                                 });
+                             }
+                         });
+                     });
+                 });
+
+             });
+         </script>
 
 
 

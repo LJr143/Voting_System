@@ -126,31 +126,7 @@ if(empty($username) || empty($password)){
     }
 
 }
-else if($campus == 'SSG'){
-
-    if($resultCheck > 0){
-        foreach($stmt as $row){
-            if(md5($password )== $row['password'] && $row['role'] == 'SSG'){
-
-                $login_response[] = array("login_result" => "ssg_success");
-                $_SESSION['username'] = $_POST['username'];
-                $_SESSION['loggedName'] = $row['firstName']." ".$row['lastName'];
-                $_SESSION['campus'] = $_POST['campus'];
-
-
-
-
-            }else{
-                $login_response[] = array("login_result" => "wrong_password");
-
-            }
-        }
-    }else{
-        $login_response[] = array("login_result" => "unknownAccount");
-
-    }
-
-}else if($campus == 'Tagum-Watcher'){
+else if($campus == 'Tagum-Watcher'){
 
     if($resultCheck > 0){
         foreach($stmt as $row){
