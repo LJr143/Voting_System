@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 require_once '../config/db_config.php';
 date_default_timezone_set('Asia/Manila');
@@ -46,15 +46,15 @@ if(empty($username) || empty($password)){
 
 
 
-    
+
             }else{
                 $login_response[] = array("login_result" => "wrong_password");
-    
+
             }
         }
     }else{
         $login_response[] = array("login_result" => "unknownAccount");
-    
+
     }
 
 
@@ -69,95 +69,120 @@ if(empty($username) || empty($password)){
 
 
 
-    
+
             }else{
                 $login_response[] = array("login_result" => "wrong_password");
-    
+
             }
         }
     }else{
         $login_response[] = array("login_result" => "unknownAccount");
-    
+
     }
 }else if($campus == 'Monitoring'){
 
     if($resultCheck > 0){
         foreach($stmt as $row){
             if(md5($password )== $row['password'] && $row['role'] == 'Monitoring'){
-                
+
                 $login_response[] = array("login_result" => "monitor_success");
                 $_SESSION['username'] = $_POST['username'];
                 $_SESSION['loggedName'] = $row['firstName']." ".$row['lastName'];
 
 
-    
+
             }else{
                 $login_response[] = array("login_result" => "wrong_password");
-    
+
             }
         }
     }else{
         $login_response[] = array("login_result" => "unknownAccount");
-    
+
     }
 
 }else if($campus == 'Mabini-Watcher'){
 
-            if($resultCheck > 0){
-                foreach($stmt as $row){
-                    if(md5($password )== $row['password'] && $row['role'] == 'Mabini-Watcher'){
-            
-                        $login_response[] = array("login_result" => "watcher_success");
-                        $_SESSION['username'] = $_POST['username'];
-                        $_SESSION['loggedName'] = $row['firstName']." ".$row['lastName'];
-                        $_SESSION['campus'] = "Mabini";
+    if($resultCheck > 0){
+        foreach($stmt as $row){
+            if(md5($password )== $row['password'] && $row['role'] == 'Mabini-Watcher'){
+
+                $login_response[] = array("login_result" => "watcher_success");
+                $_SESSION['username'] = $_POST['username'];
+                $_SESSION['loggedName'] = $row['firstName']." ".$row['lastName'];
+                $_SESSION['campus'] = "Mabini";
 
 
-        
-            
-                    }else{
-                        $login_response[] = array("login_result" => "wrong_password");
-            
-                    }
-                }
+
+
             }else{
-                $login_response[] = array("login_result" => "unknownAccount");
-            
+                $login_response[] = array("login_result" => "wrong_password");
+
             }
+        }
+    }else{
+        $login_response[] = array("login_result" => "unknownAccount");
 
-        }else if($campus == 'Tagum-Watcher'){
+    }
 
-                if($resultCheck > 0){
-                    foreach($stmt as $row){
-                        if(md5($password )== $row['password'] && $row['role'] == 'Tagum-Watcher'){
-                
-                            $login_response[] = array("login_result" => "watcher_success");
-                            $_SESSION['username'] = $_POST['username'];
-                            $_SESSION['loggedName'] = $row['firstName']." ".$row['lastName'];
-                            $_SESSION['campus'] = "Tagum";
+}
+else if($campus == 'SSG'){
+
+    if($resultCheck > 0){
+        foreach($stmt as $row){
+            if(md5($password )== $row['password'] && $row['role'] == 'SSG'){
+
+                $login_response[] = array("login_result" => "ssg_success");
+                $_SESSION['username'] = $_POST['username'];
+                $_SESSION['loggedName'] = $row['firstName']." ".$row['lastName'];
+                $_SESSION['campus'] = $_POST['campus'];
 
 
-            
-                
-                        }else{
-                            $login_response[] = array("login_result" => "wrong_password");
-                
-                        }
-                    }
-                }else{
-                    $login_response[] = array("login_result" => "unknownAccount");
-                
-                }
-            
+
+
+            }else{
+                $login_response[] = array("login_result" => "wrong_password");
+
+            }
+        }
+    }else{
+        $login_response[] = array("login_result" => "unknownAccount");
+
+    }
+
+}else if($campus == 'Tagum-Watcher'){
+
+    if($resultCheck > 0){
+        foreach($stmt as $row){
+            if(md5($password )== $row['password'] && $row['role'] == 'Tagum-Watcher'){
+
+                $login_response[] = array("login_result" => "watcher_success");
+                $_SESSION['username'] = $_POST['username'];
+                $_SESSION['loggedName'] = $row['firstName']." ".$row['lastName'];
+                $_SESSION['campus'] = "Tagum";
+
+
+
+
+            }else{
+                $login_response[] = array("login_result" => "wrong_password");
+
+            }
+        }
+    }else{
+        $login_response[] = array("login_result" => "unknownAccount");
+
+    }
+
 
 }else if($campus == "campus"){
     $login_response[] = array("login_result" => "campus_error");
-   
+
 }else{
     if($resultCheck > 0){
         foreach($stmt as $row){
             if(md5($password )== $row['password'] && $campus == $row['role']){
-    
+
                 $login_response[] = array("login_result" => "success");
                 $_SESSION['username'] = $_POST['username'];
                 $_SESSION['loggedName'] = $row['firstName']." ".$row['lastName'];
@@ -165,15 +190,15 @@ if(empty($username) || empty($password)){
 
 
 
-    
+
             }else{
                 $login_response[] = array("login_result" => "wrong_password");
-    
+
             }
         }
     }else{
         $login_response[] = array("login_result" => "unknownAccount");
-    
+
     }
 }
 
