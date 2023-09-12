@@ -23,17 +23,18 @@ function Make_Query_For_Position($connect,$campus){
 function Make_Query_For_Local_Council($connect,$campus,$college,$program,$year,$position)
 {
     if($campus == "Tagum"){
-        if($position == "Senator" || $position == "Bussines Manager"){
+        if($position == "Senator" || $position == "Business Manager"){
             //Senator (2 per program)
             //dili kay kung siya lng isa
             $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
             $result = mysqli_query($connect, $query);
-        }elseif($position == "Bussines Manager"){
+        }elseif($position == "Business Manager"){
             //Senator (2 per program)
             //dili kay kung siya lng isa
             $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
             $result = mysqli_query($connect, $query);
-        }else{
+        }
+        else{
             if($program == "Bachelor of Science in Agricultural and Biosystems Engineering"){
                 //Society of Agricultural and Biosystem Engineering Students (SABES)
                 $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND (program = "BS in Agricultural and Biosystems Engineering" OR program = "Bachelor of Science in Agricultural and Biosystems Engineering")  AND indicator = "local council" ORDER BY id ASC ';

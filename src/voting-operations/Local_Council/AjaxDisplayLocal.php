@@ -124,12 +124,12 @@
                      $flag[$number] = true;
                      $flag[$count] = false;
                      $count++;
-                        if($position === "Business Manager" && $campus === "Tagum" && mysqli_num_rows($resultCandidate) > 1){
-                           $number = 11;
-                           $flag[$number] = true;
-                           $flag[$count] = false;
-                           $count++;
-                        }
+//                        if($position === "Business Manager" && $campus === "Tagum" && mysqli_num_rows($resultCandidate) > 1){
+//                           $number = 11;
+//                           $flag[$number] = true;
+//                           $flag[$count] = false;
+//                           $count++;
+//                        }
                   }elseif($position == "Senator" && $campus == "Tagum"){
                      $number = 12;
                      $flag[$number] = true;

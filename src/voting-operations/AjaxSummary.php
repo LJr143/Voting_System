@@ -110,7 +110,7 @@ if($_SESSION['college_name_voter'] == 'School of Medicine'){
                             $query2 = 'select * from tbnominees where position ="'.$rowPosition["position_name"].'" ';
                             $result2 = mysqli_query($connect,$query2);
                                 
-                            if(mysqli_num_rows($result2) > 1){
+                            if(mysqli_num_rows($result2) <= 1){
                                 $query3 = 'select * from tbnominees where id="'.$IDLocal[10].'" AND position ="'.$rowPosition["position_name"].'" ';
                                 $result3 = mysqli_query($connect,$query3);
                                 
