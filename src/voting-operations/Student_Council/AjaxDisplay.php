@@ -29,6 +29,16 @@
       }
       return $result;
    }
+function Make_Query_For_Som_Student_Council($connect, $campus, $year, $position) {
+    if ($campus == "Mabini" && $position == "Representative") {
+        $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND year ="'.$year.'"  AND indicator = "School of Medicine Student Council" ORDER BY id ASC ';
+        $result = mysqli_query($connect, $query);
+    } else {
+        $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND indicator = "School of Medicine Student Council"  ORDER BY id ASC ';
+        $result = mysqli_query($connect, $query);
+    }
+    return $result;
+}
    //Check If The Student Proceed to the Local Council
    //Only 10 Position in The Student Council Available
    if (isset($_SESSION["Proceed"])) {
@@ -37,34 +47,62 @@
       $flag = array(false, false, false, false, false, false, false, false, false, false);
       echo json_encode(array($ID, $Start, $flag, "Session"));
    } else {
-      $ID = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-      $Start = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-      $flag = array(false, false, false, false, false, false, false, false, false, false);
-      $check = false;
-      for ($count = 0; $count < 10; $count++) {
+       $ID = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+       $Start = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+       $flag = array(false, false, false, false, false, false, false, false, false, false);
+       $check = false;
+       if($_SESSION['college_name_voter'] == 'School of Medicine'){
+           for ($count = 0; $count < 10; $count++) {
 
-         $query = 'SELECT DISTINCT position_name FROM tbcouncil WHERE campus = "'.$campus.'" ';
-         $resultPosition = mysqli_query($connect, $query);
+               $query = 'SELECT DISTINCT position_name FROM tbsomposition WHERE campus = "'.$campus.'" ';
+               $resultPosition = mysqli_query($connect, $query);
 
-         if ($check == false) {
-            while ($rowPosition = mysqli_fetch_array($resultPosition)) {
+               if ($check == false) {
+                   while ($rowPosition = mysqli_fetch_array($resultPosition)) {
 
-               $resultCandidate = Make_Query_For_Student_Council($connect, $campus, $year, $rowPosition["position_name"]);
+                       $resultCandidate = Make_Query_For_Som_Student_Council($connect, $campus, $year, $rowPosition["position_name"]);
 
-               if (mysqli_num_rows($resultCandidate) > 0) {
-                  $flag[$count] = true;
-                  $count++;
+                       if (mysqli_num_rows($resultCandidate) > 0) {
+                           $flag[$count] = true;
+                           $count++;
+                       } else {
+                           $flag[$count] = false;
+                           $count++;
+                       }
+                   }
+                   $check = true;
                } else {
-                  $flag[$count] = false;
-                  $count++;
+                   $flag[$count] = false;
                }
-            }
-            $check = true;
-         } else {
-            $flag[$count] = false;
-         }
-      }
+           }
 
-      echo json_encode(array($ID, $Start, $flag, "NoSession"));
+       }else{
+           for ($count = 0; $count < 10; $count++) {
+
+               $query = 'SELECT DISTINCT position_name FROM tbcouncil WHERE campus = "'.$campus.'" ';
+               $resultPosition = mysqli_query($connect, $query);
+
+               if ($check == false) {
+                   while ($rowPosition = mysqli_fetch_array($resultPosition)) {
+
+                       $resultCandidate = Make_Query_For_Student_Council($connect, $campus, $year, $rowPosition["position_name"]);
+
+                       if (mysqli_num_rows($resultCandidate) > 0) {
+                           $flag[$count] = true;
+                           $count++;
+                       } else {
+                           $flag[$count] = false;
+                           $count++;
+                       }
+                   }
+                   $check = true;
+               } else {
+                   $flag[$count] = false;
+               }
+           }
+
+       }
+       echo json_encode(array($ID, $Start, $flag, "NoSession"));
+
    } 
 ?>

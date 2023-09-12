@@ -1231,7 +1231,30 @@ $("#indicator").change(function(){
           }
       });
       
-    }else{
+    }else if(council_id == "School of Medicine Student Council"){
+
+        $.ajax({
+            url: '../includes/get_som_council_position.php',
+            type: 'post',
+            data: {council_id:council_id},
+            dataType: 'json',
+            success:function(response){
+
+                var len = response.length;
+
+                $("#position").empty();
+                for( var i = 0; i<len; i++){
+                    var name = response[i]['name'];
+
+                    $("#position").append("<option value='"+name+"'>"+name+"</option>");
+
+                }
+            }
+        });
+
+    }
+
+    else{
          $("#position").empty();  
         var name = "Choose Position...";
         
@@ -1279,26 +1302,50 @@ $("#newIndicator").change(function(){
 
     }else if(council_id == "Local Council"){
 
-      $.ajax({
-          url: '../includes/get_local_position.php',
-          type: 'post',
-          data: {council_id:council_id},
-          dataType: 'json',
-          success:function(response){
+        $.ajax({
+            url: '../includes/get_local_position.php',
+            type: 'post',
+            data: {council_id:council_id},
+            dataType: 'json',
+            success:function(response){
 
-              var len = response.length;
+                var len = response.length;
 
-              $("#newPosition").empty();
-              for( var i = 0; i<len; i++){
-                  var name = response[i]['name'];
-                  
-                  $("#newPosition").append("<option value='"+name+"'>"+name+"</option>");
+                $("#newPosition").empty();
+                for( var i = 0; i<len; i++){
+                    var name = response[i]['name'];
 
-              }
-          }
-      });
-      
-    }else{
+                    $("#newPosition").append("<option value='"+name+"'>"+name+"</option>");
+
+                }
+            }
+        });
+
+    }else if(council_id == "School of Medicine Student Council"){
+
+        $.ajax({
+            url: '../includes/get_som_council_position.php',
+            type: 'post',
+            data: {council_id:council_id},
+            dataType: 'json',
+            success:function(response){
+
+                var len = response.length;
+
+                $("#newPosition").empty();
+                for( var i = 0; i<len; i++){
+                    var name = response[i]['name'];
+
+                    $("#newPosition").append("<option value='"+name+"'>"+name+"</option>");
+
+                }
+            }
+        });
+
+    }
+
+
+    else{
          $("#newPosition").empty();  
         var name = "Choose Position...";
         

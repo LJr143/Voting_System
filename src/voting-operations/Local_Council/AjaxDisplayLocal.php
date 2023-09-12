@@ -33,7 +33,7 @@
          $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
          $result = mysqli_query($connect, $query);
       }else{
-         if($program == "BS in Agricultural and Biosystems Engineering" || $program == "Bachelor of Science in Agricultural Engineering"){
+         if($program == "BS in Agricultural and Biosystems Engineering" || $program == "Bachelor of Science in Agricultural and Biosystems Engineering"){
          //Society of Agricultural and Biosystems Engineering Students (SABES)
          $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program = "'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
          $result = mysqli_query($connect, $query);
@@ -58,19 +58,19 @@
              //Bachelor of Early Childhood Education
              $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
              $result = mysqli_query($connect, $query);
-             $lcname = "Bachelor of Early Childhood Education";
+             $lcname = "Association of Early Childhood Education Students";
          }
          elseif($program == "Bachelor of Special Needs Education"){
              //Bachelor of Special Needs Education
              $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
              $result = mysqli_query($connect, $query);
-             $lcname = "Bachelor of Special Needs Education";
+             $lcname = "Organization of Future Special Education Teachers";
          }
          elseif($program == "Bachelor of Technical-Vocational Teacher Education"){
              //Bachelor of Technical-Vocational Teacher Education
              $query = 'SELECT * FROM tbnominees WHERE position = "'.$position.'" AND campus = "'.$campus.'" AND college ="'.$college.'" AND program ="'.$program.'"  AND indicator = "local council" ORDER BY id ASC ';
              $result = mysqli_query($connect, $query);
-             $lcname = "Bachelor of Technical-Vocational Teacher Education";
+             $lcname = "The Future Technical-Vocational Education Teachers and Trainers Society";
          }
          elseif($program == "School of Medicine"){
              //School of Medicine

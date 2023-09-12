@@ -3,7 +3,7 @@
   error_reporting(0);
   date_default_timezone_set('Asia/Manila');
   include '../config/db_config.php';
-  //    require_once '../includes/central_election_result_add.php';
+  require_once '../includes/central_election_result_add.php';
 
 
   if(!isset($_SESSION['username'])){

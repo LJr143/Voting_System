@@ -41,10 +41,18 @@ try {
     $programRow = $stmtProgram->fetch(PDO::FETCH_ASSOC);
     $programId = $programRow['program_id'];
 
-    // Prepare the INSERT query
+    // Retrieve admin_id based on tempCampus
+    $queryAdminId = "SELECT admin_id FROM tbadmin WHERE username = :tempCampus";
+    $stmtAdminId = $pdo->prepare($queryAdminId);
+    $stmtAdminId->bindParam(':tempCampus', $tempCampus, PDO::PARAM_STR);
+    $stmtAdminId->execute();
+    $rowAdminId = $stmtAdminId->fetch(PDO::FETCH_ASSOC);
+    $admin_id = ($rowAdminId) ? $rowAdminId['admin_id'] : null;
+
+    // Prepare the INSERT query for adding a voter
     $stmtInsert = $pdo->prepare('INSERT INTO tb_voter (fname, lname, program_id, college_id, campus, year, stud_id, password, email) VALUES (:fname, :lname, :programId, :collegeId, :campus, :year, :studId, :password, :email)');
 
-    // Bind the parameter values
+    // Bind the parameter values for adding a voter
     $stmtInsert->bindParam(':fname', $fname, PDO::PARAM_STR);
     $stmtInsert->bindParam(':lname', $lname, PDO::PARAM_STR);
     $stmtInsert->bindParam(':programId', $programId, PDO::PARAM_INT);
@@ -55,17 +63,25 @@ try {
     $stmtInsert->bindParam(':password', $pass, PDO::PARAM_STR);
     $stmtInsert->bindParam(':email', $email, PDO::PARAM_STR);
 
-    // Execute the INSERT query
+    // Execute the INSERT query for adding a voter
     $stmtInsert->execute();
 
-    $query2 = "INSERT INTO tblogs(name,action,timestamp) VALUES('$tempCampus', '$action','$dt')";
+    // Check if the voter insertion was successful
     if ($stmtInsert) {
         $success = 'true';
-        mysqli_query($conn, $query2);
+
+        // Insert system log data into the tb_admin_action_logs table
+        $query2 = "INSERT INTO tb_admin_action_logs (admin_id, action, log_action_date) VALUES (:admin_id, :action, :dt)";
+        $stmtLog = $pdo->prepare($query2);
+        $stmtLog->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+        $stmtLog->bindParam(':action', $action, PDO::PARAM_STR);
+        $stmtLog->bindParam(':dt', $dt, PDO::PARAM_STR);
+        $stmtLog->execute();
     } else {
-        $statusMsg = "Sorry, there was an error adding the voter. The entered student ID or email already exists in the database" . mysqli_error($conn);
+        $statusMsg = "Sorry, there was an error adding the voter. The entered student ID or email already exists in the database";
     }
 } catch (PDOException $e) {
-    //echo "Connection failed: " . $e->getMessage();
+    // Handle any PDO exceptions here
+    $statusMsg = "PDO Error: " . $e->getMessage();
 }
 ?>

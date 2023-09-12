@@ -395,7 +395,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <div class="modal-footer justify-content-center">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>
                             Cancel</button>
-                        <form method="post"><button type="submit" class="btn btn-primary" id="empty" name="empty"><i class="fa fa-check" aria-hidden="true"></i>
+                        <form method="post"><button type="submit" class="btn btn-primary" id="empty" name="empty" disabled><i class="fa fa-check" aria-hidden="true"></i>
                                 Okay</button></form>
                     </div>
                 </div>

@@ -29,6 +29,7 @@ $messageBody = "
                             <div style= 'border: 2px solid #BFBFBF; box-shadow: 10px 10px 5px #aaaaaa;padding: 10px 10px 20px 10px;text-align:center;width:50%;margin:0 auto;display:block;border-radius:1rem'>
                                 <h1>Your One-Time-Password 
                                 <strong style='color:red'>".$otpsend."</strong></h1> <br> <h4>Thank you for loving USeP E-Voting<h4> 
+                                <strong style='color:red'>".$otpsend."</strong></h1> <br> <h6>University of Southeastern Philippines Tagum Commision on Elections<h6> 
                             </div>
                         </body>
                     </html>
@@ -104,15 +105,15 @@ $proxy = 'false';
                                     $subject = "USeP E-Voting OTP Code";
                                     $message = "Your Code:'" . $otpsend . "'";
 
-                                    $mail->setFrom('comelecusep@gmail.com', 'USeP E-Voting')
+                                    $mail->setFrom('tsccomelec@usep.edu.ph', 'USeP E-Voting')
                                         ->addTo($email)
                                         ->setSubject($subject)
                                         ->setHTMLBody($messageBody);
 
                                     $mailer = new Nette\Mail\SmtpMailer([
                                         'host' => 'smtp.gmail.com',
-                                        'username' => 'lorjohn143@gmail.com',
-                                        'password' => 'ssaqnwmgccdaeawa',
+                                        'username' => 'tsccomelec@usep.edu.ph',
+                                        'password' => 'zrkcdvjdqsvytral',
                                         'secure' => 'ssl',
                                     ]);
                                     $mailer->send($mail);

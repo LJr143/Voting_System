@@ -10,6 +10,7 @@ if($flag == 'true' && $flag1 == 'true' && $flag2 == 'true'){
     header("Location: election_closed.php");
 }
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

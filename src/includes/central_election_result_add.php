@@ -95,14 +95,19 @@ include '../config/db_config.php';
 
 <!-- logs -->
 <?php
-//
-//$conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-//$tempCampus = $_SESSION['username'];
-//$dt = date('Y-m-d G:i:s');
-//$action = "Election Result | Access Granted";
-//$query = "INSERT into tb_admin_action_logs(username,action,log_action_date)VALUES('$tempCampus','$action','$dt')";
-//mysqli_query($conn, $query);
-//
-//$conn->close();
-//
-//?>
+$conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+$tempCampus = $_SESSION['username'];
+$dt = date('Y-m-d G:i:s');
+$action = "Election Result | Access Granted";
+$query4 = "Select admin_id from tbadmin where username = '$tempCampus'";
+$result = mysqli_query($conn, $query4);
+$row = mysqli_fetch_assoc($result);
+if ($row) {
+    $admin_id = $row['admin_id'];
+    $query2 = "INSERT INTO tb_admin_action_logs(admin_id,action,log_action_date) VALUES('$admin_id', '$action','$dt')";
+
+    mysqli_query($conn, $query2);
+}
+
+$conn->close();
+?>

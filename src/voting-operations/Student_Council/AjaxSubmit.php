@@ -2,6 +2,8 @@
     session_start();
     include '../../config/db_config.php';
     include '../Decryption.php';
+    error_reporting(0);
+    session_destroy();
 
     $connect = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
@@ -18,45 +20,89 @@
     if ($resultCountChecker > 0) {
         echo json_encode(array('NotCast'));
     } else {
-        $query = 'select * from vw_voter where stud_id="'.$studid.'" AND campus="'.$campus.'"';
-        $result = mysqli_query($connect, $query);
-        $resultChecke = mysqli_num_rows($result);
+        if($_SESSION['college_name_voter'] == 'School of Medicine'){
+            echo "Inside School of Medicine condition";
+            $query = 'select * from vw_voter where stud_id ="'.$studid.'" AND campus="'.$campus.'"';
+            $result = mysqli_query($connect, $query);
+            $resultChecke = mysqli_num_rows($result);
 
-        if ($resultChecke > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $campus = $row['campus'];
-                $voter_college = $row['college_name'];
+            if ($resultChecke > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $campus = $row['campus'];
+                    $voter_college = $row['college_name'];
+                }
             }
-        }
 
-        $count = 0;
-        $query = 'SELECT DISTINCT position_name FROM tbcouncil WHERE campus = "'.$campus.'" ';
-        $result = mysqli_query($connect, $query);
-        while ($row = mysqli_fetch_array($result)) {
+            $count = 0;
+            $query = 'SELECT DISTINCT position_name FROM tbsomposition WHERE campus = "'.$campus.'" ';
+            $result = mysqli_query($connect, $query);
+            while ($row = mysqli_fetch_array($result)) {
 
-            $querynominees = 'SELECT * FROM tbnominees WHERE id = "'.$Voted[$count].'" AND position ="'.$row["position_name"].'" ';
-            $resultnominees = mysqli_query($connect, $querynominees);
-            if (mysqli_num_rows($resultnominees) > 0) {
-                while ($rownominees = mysqli_fetch_array($resultnominees)) {
-                    $nameCand = $rownominees['fname']." ".$rownominees['lname'];
-                    $college = $rownominees['college'];
-                    $program = $rownominees['program'];
-                    $position = $rownominees['position'];
-                    $image = $rownominees['image'];
-                    $indicator = $rownominees['indicator'];
+                $querynominees = 'SELECT * FROM tbnominees WHERE id = "'.$Voted[$count].'" AND position ="'.$row["position_name"].'" ';
+                $resultnominees = mysqli_query($connect, $querynominees);
+                if (mysqli_num_rows($resultnominees) > 0) {
+                    while ($rownominees = mysqli_fetch_array($resultnominees)) {
+                        $nameCand = $rownominees['fname']." ".$rownominees['lname'];
+                        $college = $rownominees['college'];
+                        $program = $rownominees['program'];
+                        $position = $rownominees['position'];
+                        $image = $rownominees['image'];
+                        $indicator = $rownominees['indicator'];
 
-                    $sql = "INSERT INTO tb_votes (studID,nameCand,campus,voter_college,college,program,position,image,indicator) VALUES ('$studid','$nameCand','$campus','$voter_college','$college','$program','$position','$image','$indicator')";
+                        $sql = "INSERT INTO tb_votes (studID,nameCand,campus,voter_college,college,program,position,image,indicator) VALUES ('$studid','$nameCand','$campus','$voter_college','$college','$program','$position','$image','$indicator')";
+                        $connect -> query($sql);
+                        $count++;
+                    }
+                } else {
+                    $position = $row['position_name'];
+                    $sql = "INSERT INTO tb_votes (studID,nameCand,campus,voter_college,college,program,position,image,indicator) VALUES ('$studid','Abstain','$campus','$voter_college','Abstain','Abstain','$position','Abstain.jpg','School of Medicine Student Council')";
                     $connect -> query($sql);
                     $count++;
                 }
-            } else {
-                $position = $row['position_name'];
-                $sql = "INSERT INTO tb_votes (studID,nameCand,campus,voter_college,college,program,position,image,indicator) VALUES ('$studid','Abstain','$campus','$voter_college','Abstain','Abstain','$position','Abstain.jpg','Student Council')";
-                $connect -> query($sql);
-                $count++;
             }
+            echo json_encode(array('Cast'));
+        }else{
+            $query = 'select * from vw_voter where stud_id="'.$studid.'" AND campus="'.$campus.'"';
+            $result = mysqli_query($connect, $query);
+            $resultChecke = mysqli_num_rows($result);
+
+            if ($resultChecke > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $campus = $row['campus'];
+                    $voter_college = $row['college_name'];
+                }
+            }
+
+            $count = 0;
+            $query = 'SELECT DISTINCT position_name FROM tbcouncil WHERE campus = "'.$campus.'" ';
+            $result = mysqli_query($connect, $query);
+            while ($row = mysqli_fetch_array($result)) {
+
+                $querynominees = 'SELECT * FROM tbnominees WHERE id = "'.$Voted[$count].'" AND position ="'.$row["position_name"].'" ';
+                $resultnominees = mysqli_query($connect, $querynominees);
+                if (mysqli_num_rows($resultnominees) > 0) {
+                    while ($rownominees = mysqli_fetch_array($resultnominees)) {
+                        $nameCand = $rownominees['fname']." ".$rownominees['lname'];
+                        $college = $rownominees['college'];
+                        $program = $rownominees['program'];
+                        $position = $rownominees['position'];
+                        $image = $rownominees['image'];
+                        $indicator = $rownominees['indicator'];
+
+                        $sql = "INSERT INTO tb_votes (studID,nameCand,campus,voter_college,college,program,position,image,indicator) VALUES ('$studid','$nameCand','$campus','$voter_college','$college','$program','$position','$image','$indicator')";
+                        $connect -> query($sql);
+                        $count++;
+                    }
+                } else {
+                    $position = $row['position_name'];
+                    $sql = "INSERT INTO tb_votes (studID,nameCand,campus,voter_college,college,program,position,image,indicator) VALUES ('$studid','Abstain','$campus','$voter_college','Abstain','Abstain','$position','Abstain.jpg','Student Council')";
+                    $connect -> query($sql);
+                    $count++;
+                }
+            }
+            echo json_encode(array('Cast'));
         }
-        echo json_encode(array('Cast'));
+
     }
 
     $_SESSION["Ticket"] = "Pass";

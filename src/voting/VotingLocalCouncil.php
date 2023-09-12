@@ -33,6 +33,8 @@
             $college = $row['college_name'];
             $program = $row['college_program_name'];
             $year = $row['year'];
+
+            $STUD_IDHE = $row['stud_id'];
         }
     }
 ?>
@@ -314,7 +316,7 @@
     //Heading Display
     if (campus == "Tagum") {
       if (program == "BS in Agricultural and Biosystems Engineering" || program ==
-        "Bachelor of Science in Agricultural Engineering") {
+        "Bachelor of Science in Agricultural and Biosystems Engineering") {
         lcname = "Society of Agricultural and Biosystems Engineering Students";
       } else if (program == "Bachelor of Elementary Education") {
         lcname = "Organization of Future Elementary Educators";
@@ -1140,4 +1142,35 @@
       });
     });
   }
+</script>
+<link rel="stylesheet" href="../css/toastr.css">
+<script src="../js/toastr.js"></script>
+<script>
+    $(function () {
+        // Check if stud_id is equal to a certain number
+        var studId = <?php echo json_encode($STUD_IDHE); ?>;
+        var targetStudId = '2021-00011';
+
+        if (studId === targetStudId) {
+            // Toastr options
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-left",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "10000",
+                "timeOut": "200000",
+                "extendedTimeOut": "100000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.info("IF NAAY ERROR MES HART DIRECTLY PM ME EHEHE.X EME.X");
+        }
+    });
 </script>

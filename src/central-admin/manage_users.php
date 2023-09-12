@@ -2,6 +2,7 @@
     session_start();
     require_once '../config/db_config.php';
     include '../operations/insert_nominee.php';
+    date_default_timezone_set('Asia/Manila');
 
     //error_reporting(0);
 
@@ -742,10 +743,7 @@
      <!-- sweet alert dialog -->
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
-     <!-- chat room -->
-     <div id="rt-8896a2e1910b867224e9470355f977b6" data-floating="true" data-side="right" data-width="700" data-height="500" data-counter="14,23"></div> <script src="https://rumbletalk.com/client/?HYtucjo~"></script>    <!-- script bar chart -->
 
-     
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>

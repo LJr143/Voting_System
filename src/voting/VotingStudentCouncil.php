@@ -6,6 +6,7 @@
     error_reporting(0);
     $connect = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 
+
    if(isset($_SESSION["saved"])){
 
 }else{
@@ -16,6 +17,10 @@
     $college;  
     $program;
     $year;
+    $STUD_IDHE;
+
+
+
 
     $voter = mysqli_real_escape_string($connect,decryption($_SESSION["saved"]));
     $campus = mysqli_real_escape_string($connect,decryption($_SESSION["Usep-Comelec"]));
@@ -28,11 +33,13 @@
     if($resultChecke > 0){
       while($row = mysqli_fetch_assoc($result)){
         $campus = $row['campus'];
-        $college = $row['college'];
-        $program = $row['program'];
+        $college = $row['college_name'];
+        $program = $row['college_program_name'];
         $year = $row['year'];
+        $STUD_IDHE = $row['stud_id'];
       }
     }
+    $_SESSION['college_name_voter'] = $college;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -159,12 +166,33 @@
       <div class="text-center w-100 col-12">
         <img class="rounded-circle mt-1" id="img">
         <h1 class="text-responsive font-weight-bold text-uppercase text-dark">
-          <?PHP echo $campus ?> CAMPUS STUDENT COUNCIL</h1>
+
+            <?php
+            if ($college == "School of Medicine") {
+                echo $campus . " CAMPUS SCHOOL OF MEDICINE STUDENT COUNCIL</h1>";
+            } else {
+                echo $campus . " CAMPUS STUDENT COUNCIL</h1>";
+            }
+            ?>
+
+
       </div>
-      <?php echo Make_Query_For_Position($connect,$campus);?>
+        <?php
+        if ($college == "School of Medicine") {
+            echo Make_Query_For_Som_Position($connect,$campus);
+        } else {
+            echo Make_Query_For_Position($connect,$campus);
+        }
+        ?>
       <div class="mx-3">
         <div class="form-row">
-          <?php echo Make_Slides_For_Student_Council($connect,$campus,$college,$program,$year);?>
+            <?php
+            if ($college == "School of Medicine") {
+                echo Make_Slides_For_Som_Student_Council($connect,$campus,$college,$program,$year);
+            } else {
+                echo Make_Slides_For_Student_Council($connect,$campus,$college,$program,$year);
+            }
+            ?>
         </div>
       </div>
     </div>
@@ -183,6 +211,7 @@
   integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
 <script>
+
   function hide() {
     document.getElementById("submit").style.visibility = 'hidden';
   }
@@ -672,4 +701,36 @@
       });
     });
   }
+</script>
+
+<link rel="stylesheet" href="../css/toastr.css">
+<script src="../js/toastr.js"></script>
+<script>
+    $(function () {
+        // Check if stud_id is equal to a certain number
+        var studId = <?php echo json_encode($STUD_IDHE); ?>;
+        var targetStudId = '2021-00011';
+
+        if (studId === targetStudId) {
+            // Toastr options
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-left",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "10000",
+                "timeOut": "200000",
+                "extendedTimeOut": "100000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.info("Hallo!! MES HART :> REGARDS KO, IKAW RAY MAKAKITA ANI HEHEHE");
+        }
+    });
 </script>

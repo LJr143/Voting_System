@@ -66,6 +66,7 @@ var buttons3 = new $.fn.dataTable.Buttons(table, {
                             beforeSend:function(data){
                             },
                             success:function(data){
+                                "<?php ?>"
                                 Swal.fire({
                                 title: 'Success',
                                 text: "New user was added successfully",

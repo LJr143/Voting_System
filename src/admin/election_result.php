@@ -267,6 +267,8 @@
                             <div class="nav nav-tabs nav-fill card-body" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link active" id="nav-press-tab" data-toggle="tab" href="#nav-press" role="tab" aria-controls="nav-press" aria-selected="true">Student Council</a>
                                 <a class="nav-item nav-link" id="nav-ivpress-tab" data-toggle="tab" href="#nav-ivpress" role="tab" aria-controls="nav-ivpress" aria-selected="false">Local Council</a>
+                                <a class="nav-item nav-link" id="nav-som-tab" data-toggle="tab" href="#nav-som" role="tab" aria-controls="nav-som" aria-selected="true">School of Medicine Council</a>
+
                             </div>
                         </nav>
                         <div class="tab-content text-white" id="nav-tabContent">
@@ -302,6 +304,38 @@
                           </div>
                            
                           </div>
+                            <div class="tab-pane fade show active" id="nav-som" role="tabpanel" aria-labelledby="nav-som-tab">
+                                <br>
+                                <div id="sombuttons" class="float-right"></div>
+                                <div style="height: 600px; width: 100%;overflow-y: auto;">
+                                    <table id="somnominees" class="table table-bordered table-striped">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th></th>
+                                            <th>Candidate</th>
+                                            <th>College</th>
+                                            <th>Position</th>
+                                            <th>Total Votes</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach($somstudents as $nominee) :  ?>
+                                            <tr>
+                                                <td><a href="#" class="pop">
+                                                        <img id="img" data-toggle="tooltip" title="Click to enlarge" class="border " width="60px" src="../uploads/<?= $nominee['image']; ?>" alt="">
+                                                    </a>
+                                                </td>
+                                                <td><?= $nominee['nameCand']; ?></td>
+                                                <td><?= $nominee['college']; ?></td>
+                                                <td><?= $nominee['position']; ?></td>
+                                                <td><span id="voteCount"><?= $nominee['COUNT(*)']; ?></span></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
                             <div class="tab-pane fade" id="nav-ivpress" role="tabpanel" aria-labelledby="nav-ivpress-tab">
                               <br>
                             <div id="buttons2" class="float-right"></div>
@@ -586,6 +620,46 @@
 } );
  </script>
 
+  <!-- School of Medicine -->
+  <script>
+
+      $(document).ready( function () {
+          var table =  $('#somnominees').DataTable({
+              language: {
+                  searchPlaceholder: "Search candidate"
+              },
+              filterDropDown: {
+                  columns: [
+                      {
+                          idx: 3
+                      },
+
+                  ],
+                  bootstrap: true
+              }
+
+          });
+
+          var buttons = new $.fn.dataTable.Buttons(table, {
+              buttons: [
+                  {
+                      extend:'excel',
+                      text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel',
+                      className: 'btn btn-outline-success',
+                      titleAttr:'Export to Excel',
+                      title:'election-result_'+ new Date($.now())
+                  },
+                  {
+                      extend:'print',
+                      text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
+                      className: 'btn btn-outline-success',
+                      titleAttr:'Print Result',
+                      title:'election-result_'+ new Date($.now())
+                  },
+              ]
+          }).container().appendTo($('#sombuttons'));
+      } );
+  </script>
 
 <!-- local council -->
 

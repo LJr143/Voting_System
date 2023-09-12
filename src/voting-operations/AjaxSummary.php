@@ -13,6 +13,41 @@
     $IDLocal = array($_POST['IDLocal1'],$_POST['IDLocal2'],$_POST['IDLocal3'],$_POST['IDLocal4'],$_POST['IDLocal5'],$_POST['IDLocal6'],$_POST['IDLocal7'],$_POST['IDLocal8'],$_POST['IDLocal9'],$_POST['IDLocal10'],$_POST['IDLocal11'],$_POST['IDLocal12'],$_POST['IDLocal13'],$_POST['IDLocal14'],$_POST['IDLocal15']);
 
     //Student Council
+if($_SESSION['college_name_voter'] == 'School of Medicine'){
+    for($count = 0; $count < 10; $count++){
+        $query = 'SELECT DISTINCT position_name FROM tbsomposition WHERE campus = "'.$campus.'" ';
+        $resultposition = mysqli_query($connect, $query);
+        $resultCheckeposition = mysqli_num_rows($resultposition);
+
+        $flag = false;
+        if($flag == false){
+            while($rowPosition = mysqli_fetch_assoc($resultposition)){
+                if($count < ($resultCheckeposition )){
+                    $query1 = 'select * from tbnominees where id="'.$ID[$count].'" AND position ="'.$rowPosition["position_name"].'" ';
+                    $resultId = mysqli_query($connect,$query1);
+                    $resultCheckeId = mysqli_num_rows($resultId);
+
+                    if($resultCheckeId > 0){
+                        while($row = mysqli_fetch_assoc($resultId)){
+                            $position[$count] = $rowPosition['position_name'];
+                            $final[$count] = $row['fname'].' '.$row['lname'];
+                            $count++;
+                        }
+                    }else{
+                        $position[$count] = $rowPosition['position_name'];
+                        $final[$count] = "No Vote";
+                        $count++;
+                    }
+                }
+            }
+            $flag = true;
+        }else{
+            $position[$count] = 0;
+            $count++;
+
+        }
+    }
+}else{
     for($count = 0; $count < 10; $count++){
         $query = 'SELECT DISTINCT position_name FROM tbcouncil WHERE campus = "'.$campus.'" ';
         $resultposition = mysqli_query($connect, $query);
@@ -43,9 +78,11 @@
         }else{
             $position[$count] = 0;
             $count++;
-            
-        }  
+
+        }
     }
+}
+
     
     //Local Council
     for($count = 0; $count < 16; $count++){

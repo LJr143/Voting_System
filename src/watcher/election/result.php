@@ -267,7 +267,7 @@
                           <table id="nominees" class="table table-bordered table-striped">
                           <thead class="thead-dark">
                           <tr>
-                            <th></th>
+                            <th>Image</th>
                             <th>Position</th>
                             <th>Total Votes</th>
                           </tr>
@@ -275,12 +275,13 @@
                         <tbody>
                         <?php foreach($students as $nominee) :  ?>
                         <tr>
-                              <td><a href="#" class="pop">
-                              <img id="img" data-toggle="tooltip" title="Click to enlarge" class="border " width="60px" src="../../img/question_person.png" alt="">
-                              </a>
-                              </td>
+                            <td align="center">
+                                <a href="#" class="pop">
+                                    <img  id="img" data-toggle="tooltip" title="Click to enlarge" class="border " width="60px" src="../../uploads/<?= $nominee['image']; ?>" alt="">
+                                </a>
+                            </td>
                               <td><?= $nominee['position']; ?></td>
-                              <td class="text-center text-danger font-weight-bold"><?= $nominee['COUNT(*)']; ?></td>
+                              <td class="text-center font-weight-bold"><?= $nominee['COUNT(*)']; ?></td>
                               </tr>
                               <?php endforeach; ?>
                           </tbody>
@@ -295,23 +296,25 @@
                             <table id="nominees2" class="table table-bordered table-striped">
                             <thead class="thead-dark">
                             <tr>
-                              <th></th>
+                              <th>Image</th>
                               <th>College</th>
+                                \<th>Program</th>
                               <th>Position</th>
                               <th>Total Votes</th>
                             </tr>
                           </thead>
                           <tbody>
-                          <?php foreach($students2 as $nominee) :  ?>
+                          <?php foreach($students3 as $nominee) :  ?>
                           <tr>                                   
-                                <td>
-                                <a href="#" class="pop">
-                                <img id="img" data-toggle="tooltip" title="Click to enlarge" class="border " width="60px" src="../../img/question_person.png" alt="">
-                                </a>
+                                <td align="center">
+                              <a href="#" class="pop">
+                                      <img  id="img" data-toggle="tooltip" title="Click to enlarge" class="border " width="60px" src="../../uploads/<?= $nominee['image']; ?>" alt="">
+                                  </a>
                                 </td>
                                 <td><?= $nominee['college']; ?></td>
+                              <td><?= $nominee['program']; ?></td>
                                 <td><?= $nominee['position']; ?></td>
-                                <td class="text-center text-danger font-weight-bold"><?= $nominee['COUNT(*)']; ?></td>
+                                <td class="text-center  font-weight-bold"><?= $nominee['COUNT(*)']; ?></td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
